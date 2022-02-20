@@ -1,0 +1,2319 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Exploration</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="computer-serious-sql-exclamation">💻 SERIOUS SQL ❗️</h1>
+<h1 id="mag-data-exploration-earth_asia">🔍 DATA EXPLORATION 🌏</h1>
+<h2 id="pushpin-select--sort-data">📌 Select &amp; Sort Data</h2>
+<p><strong>Show all records from the <code>language</code> table from the <code>dvd_rentals</code> schema</strong></p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>language<span class="token punctuation">;</span>
+</code></pre>
+<p><strong>Show only the <code>language_id</code> and <code>name</code> columns from the <code>language</code> table</strong></p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> 
+language_id<span class="token punctuation">,</span>name 
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>language<span class="token punctuation">;</span>
+</code></pre>
+<p><strong>Use <mark><code>LIMIT</code></mark> to restrict the output to just the first few rows from the query.</strong></p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>actor
+<span class="token keyword">LIMIT</span> <span class="token number">10</span><span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p>💡 <strong>We can use the <mark><code>ORDER BY</code></mark> clause at the end of our queries to sort the output using <mark><code>ASC</code></mark> or <mark><code>DESC</code></mark></strong></p>
+</blockquote>
+<p><strong>What are the first 5 values in the <code>country</code> column from the <code>country</code> table by alphabetical order?</strong></p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> country
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>country
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> country <span class="token keyword">ASC</span>
+<span class="token keyword">LIMIT</span> <span class="token number">5</span><span class="token punctuation">;</span>
+</code></pre>
+<p><strong>Sort By Multiple Columns</strong> - We can also perform a multi-level sort by specifying 2 or more columns with the <mark><code>ORDER BY</code></mark> clause.</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> sample_table
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> column_a <span class="token keyword">ASC</span><span class="token operator">/</span><span class="token keyword">DESC</span><span class="token punctuation">,</span> column_b <span class="token keyword">ASC</span><span class="token operator">/</span><span class="token keyword">DESC</span><span class="token punctuation">;</span>
+</code></pre>
+<h2 id="star-exercises">⭐️ Exercises</h2>
+<ol>
+<li><strong>What is the  <code>name</code>  of the category with the highest  <code>category_id</code>  in the  <code>dvd_rentals.category</code>  table?</strong></li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> name<span class="token punctuation">,</span>category_id <span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>category
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> category_id <span class="token keyword">DESC</span><span class="token punctuation">;</span>
+</code></pre>
+<ol start="2">
+<li><strong>For the films with the longest  <code>length</code>, what is the  <code>title</code>  of the “R” rated film with the lowest  <code>replacement_cost</code>  in  <code>dvd_rentals.film</code>  table?</strong></li>
+</ol>
+<ul>
+<li>We have <strong>3</strong> things to keep in mind for this question
+<ol>
+<li>Longest <code>Length</code></li>
+<li><code>title</code> with ‘R’ rating</li>
+<li>Lowest <code>replacement_cost</code></li>
+</ol>
+</li>
+</ul>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> title<span class="token punctuation">,</span>rating<span class="token punctuation">,</span>length<span class="token punctuation">,</span>replacement_cost 
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>film
+<span class="token keyword">WHERE</span> rating <span class="token operator">=</span><span class="token string">'R'</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> length <span class="token keyword">DESC</span><span class="token punctuation">,</span>replacement_cost <span class="token keyword">ASC</span>
+<span class="token keyword">LIMIT</span> <span class="token number">10</span><span class="token punctuation">;</span>
+</code></pre>
+<ol start="3">
+<li><strong>Who was the  <code>manager</code>  of the store with the highest  <code>total_sales</code>  in the  <code>dvd_rentals.sales_by_store</code>  table?</strong></li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> manager<span class="token punctuation">,</span>total_sales <span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>sales_by_store
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> total_sales <span class="token keyword">DESC</span> 
+<span class="token keyword">LIMIT</span> <span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre>
+<ol start="4">
+<li><strong>What is the  <code>postal_code</code>  of the city with the 5th highest  <code>city_id</code>  in the  <code>dvd_rentals.address</code>  table?</strong></li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> city_id<span class="token punctuation">,</span>postal_code <span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>address
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> city_id <span class="token keyword">DESC</span>
+<span class="token keyword">LIMIT</span> <span class="token number">5</span><span class="token punctuation">;</span> <span class="token comment">--Look at the 5th row</span>
+</code></pre>
+<p><strong>OR</strong></p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> city_id<span class="token punctuation">,</span>postal_code
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>address
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> city_id <span class="token keyword">DESC</span>
+<span class="token keyword">LIMIT</span> <span class="token number">1</span> <span class="token keyword">OFFSET</span> <span class="token number">4</span><span class="token punctuation">;</span> <span class="token comment">-- To return 5th row, offset the 1st 4 rows and only show the 5th row</span>
+</code></pre>
+<hr>
+<h2 id="pushpin-record-counts--distinct-values">📌 Record Counts &amp; Distinct Values</h2>
+<p><strong>We use the <mark><code>COUNT</code></mark> function to take a look at a simple record count in a table.<br>
+For example, how many rows are there in the <code>film_list</code> table?</strong></p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> row_count
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>film_list<span class="token punctuation">;</span>
+</code></pre>
+<p><strong>The <mark><code>DISTINCT</code></mark> keyword is used to identify the unique values from a column.</strong></p>
+<ul>
+<li><strong>What are the unique values for the <code>rating</code> column in the <code>film</code> table?</strong></li>
+</ul>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span><span class="token punctuation">(</span>rating<span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>film_list<span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li><strong>How many unique <code>category</code> values are there in the <code>film_list</code> table?</strong></li>
+</ul>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword">DISTINCT</span> category<span class="token punctuation">)</span> <span class="token keyword">AS</span> unique_category_count
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>film_list<span class="token punctuation">;</span>
+</code></pre>
+<p><strong><mark><code>GOUP BY</code></mark> clause with an aggregate function like <mark><code>COUNT</code></mark> allows us to “Group” the data based of the values of the selected columns.</strong></p>
+<ul>
+<li><strong>What is the frequency of values in the <code>rating</code> column in the <code>film_list</code> table?</strong></li>
+</ul>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> rating<span class="token punctuation">,</span><span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> frequency
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>film_list
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> rating<span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p><strong>💡 The important thing to note for <mark><code>GROUP BY</code></mark> aggregate functions is this: Only 1 row is returned for each group. Grouping on multiple columns returns a row for every unique combination of values present in the columns.</strong></p>
+</blockquote>
+<p><strong>Using <mark><code>GROUP BY</code></mark> on 2+ columns.</strong></p>
+<ul>
+<li><strong>What are the 5 most frequent <code>rating</code> and <code>category</code> combinations in the <code>film_list</code> table?</strong></li>
+</ul>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span>
+  rating<span class="token punctuation">,</span>
+  category<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> frequency
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>film_list
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> rating<span class="token punctuation">,</span> category
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> frequency <span class="token keyword">DESC</span>
+<span class="token keyword">LIMIT</span> <span class="token number">5</span><span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p><strong>💡 Some SQL developers like to refer to target columns used in <code>GROUP BY</code> and <code>ORDER BY</code> clauses by the positional number that the columns appear in the <code>SELECT</code> statement. This is just a stylistic choice by some developers and it won’t make any difference. I would recommend sticking with complete column names wherever possible.<br>
+For example:</strong></p>
+</blockquote>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span>
+  rating<span class="token punctuation">,</span>
+  category<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> frequency
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>film_list
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> <span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span> <span class="token keyword">DESC</span>
+<span class="token keyword">LIMIT</span> <span class="token number">5</span><span class="token punctuation">;</span>
+</code></pre>
+<h2 id="star-exercises-1">⭐️ Exercises</h2>
+<ol>
+<li><strong>Which  <code>actor_id</code>  has the most number of unique  <code>film_id</code>  records in the  <code>dvd_rentals.film_actor</code>  table?</strong></li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> actor_id<span class="token punctuation">,</span><span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword">DISTINCT</span><span class="token punctuation">(</span>film_id<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> film_count
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>film_actor
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> actor_id
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> film_count <span class="token keyword">DESC</span>
+<span class="token keyword">LIMIT</span> <span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">actor_id</th>
+<th align="center">film_count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">107</td>
+<td align="center">42</td>
+</tr>
+</tbody>
+</table><ol start="2">
+<li><strong>How many distinct  <code>fid</code>  values are there for the 3rd most common  <code>price</code>  value in the  <code>dvd_rentals.nicer_but_slower_film_list</code>  table?</strong></li>
+</ol>
+<ul>
+<li>We have <strong>2</strong> things to notice here
+<ol>
+<li>‘How many distinct’ hints that we have to use <mark><code>COUNT</code></mark> and <mark><code>DISTINCT</code></mark>.</li>
+<li>‘3rd most common <code>price</code> value’ indicates that we have to use <mark><code>GROUP BY</code></mark> on <code>price</code> column.</li>
+</ol>
+</li>
+</ul>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> price<span class="token punctuation">,</span><span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword">DISTINCT</span> fid<span class="token punctuation">)</span> <span class="token keyword">as</span> fid_count
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>nicer_but_slower_film_list
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> price
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> fid_count <span class="token keyword">DESC</span><span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">price</th>
+<th align="center">fid_count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0.99</td>
+<td align="center">340</td>
+</tr>
+<tr>
+<td align="center">4.99</td>
+<td align="center">334</td>
+</tr>
+<tr>
+<td align="center">2.99</td>
+<td align="center">323</td>
+</tr>
+</tbody>
+</table><ol start="3">
+<li><strong>How many unique  <code>country_id</code>  values exist in the  <code>dvd_rentals.city</code>  table?</strong></li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword">DISTINCT</span><span class="token punctuation">(</span>country_id<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> unique_countries 
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>city<span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">unique countries</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">109</td>
+</tr>
+</tbody>
+</table><ol start="4">
+<li><strong>What percentage of overall  <code>total_sales</code>  does the Sports  <code>category</code>  make up in the  <code>dvd_rentals.sales_by_film_category</code>  table?</strong></li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> 
+  category<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token operator">*</span>CAST<span class="token punctuation">(</span>total_sales <span class="token keyword">AS</span> <span class="token keyword">NUMERIC</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token function">SUM</span><span class="token punctuation">(</span>total_sales<span class="token punctuation">)</span> <span class="token keyword">OVER</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> 
+  <span class="token keyword">AS</span> percentage
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>sales_by_film_category<span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">category</th>
+<th align="center">percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Sports</td>
+<td align="center">7.88</td>
+</tr>
+<tr>
+<td align="center">Sci-Fi</td>
+<td align="center">7.06</td>
+</tr>
+<tr>
+<td align="center">Animation</td>
+<td align="center">6.91</td>
+</tr>
+<tr>
+<td align="center">Drama</td>
+<td align="center">6.8</td>
+</tr>
+<tr>
+<td align="center">Comedy</td>
+<td align="center">6.5</td>
+</tr>
+<tr>
+<td align="center">Action</td>
+<td align="center">6.49</td>
+</tr>
+<tr>
+<td align="center">New</td>
+<td align="center">6.46</td>
+</tr>
+<tr>
+<td align="center">Games</td>
+<td align="center">6.35</td>
+</tr>
+<tr>
+<td align="center">Foreign</td>
+<td align="center">6.33</td>
+</tr>
+<tr>
+<td align="center">Family</td>
+<td align="center">6.28</td>
+</tr>
+<tr>
+<td align="center">Documentary</td>
+<td align="center">6.26</td>
+</tr>
+<tr>
+<td align="center">Horror</td>
+<td align="center">5.52</td>
+</tr>
+<tr>
+<td align="center">Children</td>
+<td align="center">5.42</td>
+</tr>
+<tr>
+<td align="center">Classics</td>
+<td align="center">5.4</td>
+</tr>
+<tr>
+<td align="center">Travel</td>
+<td align="center">5.27</td>
+</tr>
+<tr>
+<td align="center">Music</td>
+<td align="center">5.07</td>
+</tr>
+</tbody>
+</table><ol start="5">
+<li><strong>What percentage of unique  <code>fid</code>  values are in the Children  <code>category</code>  in the  <code>dvd_rentals.film_list</code>  table?</strong></li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> 
+  category<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token number">100</span> <span class="token operator">*</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword">DISTINCT</span><span class="token punctuation">(</span>fid<span class="token punctuation">)</span><span class="token punctuation">)</span>::<span class="token keyword">NUMERIC</span> <span class="token operator">/</span> 
+  <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword">DISTINCT</span><span class="token punctuation">(</span>fid<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> 
+  <span class="token keyword">AS</span> percent_categories
+<span class="token keyword">FROM</span> dvd_rentals<span class="token punctuation">.</span>film_list
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> category<span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">category</th>
+<th align="center">percent_categories</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Action</td>
+<td align="center">6.42</td>
+</tr>
+<tr>
+<td align="center">Animation</td>
+<td align="center">6.62</td>
+</tr>
+<tr>
+<td align="center">Children</td>
+<td align="center">6.02</td>
+</tr>
+<tr>
+<td align="center">Classics</td>
+<td align="center">5.72</td>
+</tr>
+<tr>
+<td align="center">Comedy</td>
+<td align="center">5.82</td>
+</tr>
+<tr>
+<td align="center">Documentary</td>
+<td align="center">6.82</td>
+</tr>
+<tr>
+<td align="center">Drama</td>
+<td align="center">6.12</td>
+</tr>
+<tr>
+<td align="center">Family</td>
+<td align="center">6.92</td>
+</tr>
+<tr>
+<td align="center">Foreign</td>
+<td align="center">7.32</td>
+</tr>
+<tr>
+<td align="center">Games</td>
+<td align="center">6.12</td>
+</tr>
+<tr>
+<td align="center">Horror</td>
+<td align="center">5.62</td>
+</tr>
+<tr>
+<td align="center">Music</td>
+<td align="center">5.12</td>
+</tr>
+<tr>
+<td align="center">New</td>
+<td align="center">6.32</td>
+</tr>
+<tr>
+<td align="center">Sci-Fi</td>
+<td align="center">6.12</td>
+</tr>
+<tr>
+<td align="center">Sports</td>
+<td align="center">7.32</td>
+</tr>
+<tr>
+<td align="center">Travel</td>
+<td align="center">5.62</td>
+</tr>
+</tbody>
+</table><blockquote>
+<p><strong>✨ Tip: Take a note of that <mark><code>CAST</code></mark> or <mark><code>::NUMERIC</code></mark> in the previous two examples. This is to <strong>avoid</strong> dreaded integer floor division.<br>
+For example : consider a simple case of division like</strong></p>
+</blockquote>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token number">100</span><span class="token operator">/</span><span class="token number">3</span> <span class="token keyword">AS</span> integer_division<span class="token punctuation">;</span>
+<span class="token comment">--OR</span>
+<span class="token keyword">SELECT</span> <span class="token number">15</span><span class="token operator">/</span><span class="token number">20</span> <span class="token keyword">AS</span> integer_division<span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p>We expect the answer to be <strong>33.333</strong> for 100/3 but we actually get <strong>33</strong> and <strong>0.75</strong> for 15/20 but we get <strong>0</strong>.</p>
+<p>👉 <strong>Explanation: When you divide an <mark><code>INT</code></mark> data type with another <mark><code>INT</code></mark> data type - the SQL engine automatically returns you the floor division!<br>
+✔️ The solution is to simply cast either the top or the bottom of the division terms as a <mark><code>NUMERIC</code></mark> data type and you’re set!</strong></p>
+</blockquote>
+<hr>
+<h2 id="pushpin-identifying-duplicate-records-and-how-to-deal-with-them-thinking">📌 Identifying Duplicate Records and How to deal with them 🤔</h2>
+<blockquote>
+<p><strong>Introduction to Health Data</strong> : For context, this real world (<code>health.user_logs</code>) messy dataset captures data taken from individuals logging their measurements via an online portal throughout the day. For example, multiple measurements can be taken on the same day at different times, but you may notice this information is missing as the <code>log_date</code> column does not show timestamp values!. <strong>Initial dataset inspection is covered in the course content</strong>.</p>
+</blockquote>
+<h3 id="triangular_flag_on_post-detecting-duplicate-records">🚩 Detecting Duplicate Records</h3>
+<p>Before we think about removing duplicate records - we need a systematic way to check whether our table has any duplicate records first!<br>
+The first ingredient for this recipe is the basic record count for our table - plain and simple using the <mark><code>COUNT(*)</code></mark> function.</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs<span class="token punctuation">;</span>
+</code></pre>
+<h3 id="triangular_flag_on_post-remove-all-duplicates">🚩 Remove All Duplicates</h3>
+<p>We could use the <mark><code>DISTINCT</code></mark> keyword to remove duplicates from the table</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs<span class="token punctuation">;</span>
+</code></pre>
+<p><strong>BUT</strong>, if we want to count the number of rows in this deduplicated dataset using the <mark><code>COUNT</code></mark> function then we will run into an error ❌ 👉 <strong>" syntax error at or near * "</strong> for the code below</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token keyword">DISTINCT</span> <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token comment">-- this won't work</span>
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs<span class="token punctuation">;</span>
+</code></pre>
+<p>Unfortunately for us - <strong>PostgreSQL</strong> does not allow for this style of  <mark><code>COUNT(DISTINCT *)</code></mark>  syntax like we can use on a single column! ❗️<br>
+There are some other flavours of SQL that actually allow for this syntax namely Teradata, however it is not a standard operation which we can use everywhere.</p>
+<p>However, it is relatively straightforward to get around this and there are a few ways!</p>
+<ol>
+<li><strong>Subquery</strong><br>
+A subquery is essentially a query within a query - in this case we want to use our  <mark><code>DISTINCT *</code></mark>  output in the innermost nested query as a data source for the outer query.<br>
+Take note of the syntax - especially the  <mark><code>AS</code></mark>  component because subqueries must always have an alias!</li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> <span class="token punctuation">(</span>
+  <span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span> <span class="token operator">*</span>
+  <span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token punctuation">)</span> <span class="token keyword">AS</span> subquery<span class="token punctuation">;</span>
+</code></pre>
+<ol start="2">
+<li>
+<p><strong>Common Table Expression (CTE)</strong><br>
+A CTE is a SQL query that manipulates existing data and stores the data outputs as a new reference, very similar to storing data in a new temporary Excel sheet (following the Excel analogy!).</p>
+<p>Subsequent CTEs can refer to existing datasets, as well as previously generated CTEs. This allows for quite complex nested queries and operations to be performed, whilst keeping the code nice and readable!</p>
+</li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">WITH</span> deduped_logs <span class="token keyword">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span> <span class="token operator">*</span>
+  <span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token punctuation">)</span>
+<span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> deduped_logs<span class="token punctuation">;</span>
+</code></pre>
+<ol start="3">
+<li>
+<p><strong>Temporary Tables</strong><br>
+We can also create a temporary table with only the unique values of our dataset after we run the  <mark><code>DISTINCT</code></mark>  query.<br>
+This is a very common approach when you know that you will only be analyzing the deduplicated dataset, and you will ignore the original one with duplicates.</p>
+<p>The main benefit of using temporary tables is removing the need to always run the same  <mark><code>DISTINCT</code></mark>  command everytime you want to run a query on the deduplicated records. Temporary tables can also be used with indexes and partitions to speed up performance of our SQL queries.</p>
+<p>There is a lengthier process to dealing with temporary tables for our example</p>
+</li>
+</ol>
+<ul>
+<li>First we run a  <mark><code>DROP TABLE IF EXISTS</code></mark>  statement to clear out any previously created tables</li>
+</ul>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> deduplicated_user_logs<span class="token punctuation">;</span>
+</code></pre>
+<p>⚠️ Be very careful when running this following <mark><code>DROP 	TABLE</code></mark> statement as you can’t really undo things when you drop an actual table!</p>
+<ul>
+<li>Next create a new temporary table using the results of the query below</li>
+</ul>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TEMP</span> <span class="token keyword">TABLE</span> deduplicated_user_logs <span class="token keyword">AS</span>
+<span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs<span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>Let’s query this newly created temporary table to make sure we can access it</li>
+</ul>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> deduplicated_user_logs
+<span class="token keyword">LIMIT</span> <span class="token number">10</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>Finally, let’s run that same  <mark><code>COUNT</code></mark>  on this deduplicated temp table to confirm it did the right thing!</li>
+</ul>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> deduplicated_user_logs<span class="token punctuation">;</span>
+</code></pre>
+<p>✅ The entire query will look like</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> deduplicated_user_logs<span class="token punctuation">;</span>
+
+<span class="token keyword">CREATE</span> <span class="token keyword">TEMP</span> <span class="token keyword">TABLE</span> deduplicated_user_logs <span class="token keyword">AS</span>
+<span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs<span class="token punctuation">;</span>
+
+<span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> deduplicated_user_logs<span class="token punctuation">;</span>
+</code></pre>
+<h4 id="so-out-of-the-3-ways-which-one-should-i-use-thinking">So, out of the 3 ways which one should I use? 🤔</h4>
+<p>Ask this question to yourself:</p>
+<blockquote>
+<p>Will I need to use the deduplicated data later?</p>
+</blockquote>
+<ul>
+<li>If <strong>YES</strong> 👍, opt for <strong>Temporary Tables</strong></li>
+<li>If <strong>NO</strong> 👎, go with <strong>CTEs</strong></li>
+</ul>
+<p>Subqueries are not recommended because they are less readable than CTEs.</p>
+<h3 id="triangular_flag_on_post-identifying-duplicate-records">🚩 Identifying Duplicate Records</h3>
+<p>Finally our aim is to write a final SQL statement to efficiently return us all rows which are duplicated in our target table.</p>
+<p>✅ <strong>Group By Counts On All Columns</strong><br>
+There are different ways to approach this simple problem of returning duplicate rows depending on what is required.<br>
+We can implement a single SQL statement that will help us achieve both outputs and also something even more useful!<br>
+The trick is to use a  <mark><code>GROUP BY</code></mark>  clause which has every single column in the grouping element and a  <mark><code>COUNT</code></mark>  aggregate function - this is an elegant solution to quickly find the unique combinations of all the rows.</p>
+<p>Hang on a second…isn’t that exactly what the  <mark><code>DISTINCT</code></mark> keyword is supposed to do?<br>
+Yes - that’s correct! The only difference here is that we can also apply the aggregate function with the  <mark><code>GROUP BY</code></mark>  clause to find the counts for the unique combinations.</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span>
+  id<span class="token punctuation">,</span>
+  log_date<span class="token punctuation">,</span>
+  measure<span class="token punctuation">,</span>
+  measure_value<span class="token punctuation">,</span>
+  systolic<span class="token punctuation">,</span>
+  diastolic<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> frequency
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span>
+  id<span class="token punctuation">,</span>
+  log_date<span class="token punctuation">,</span>
+  measure<span class="token punctuation">,</span>
+  measure_value<span class="token punctuation">,</span>
+  systolic<span class="token punctuation">,</span>
+  diastolic
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> frequency <span class="token keyword">DESC</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Notice how the frequency for some of these values is 1 (which means they are unique) - whilst some are greater than 1 (which means they are duplicates)<br>
+This is exactly how we know which unique combinations of the columns have duplicates!</p>
+<p>✅ <strong>Having Clause For Unique Duplicates</strong><br>
+Now the final step is to use the <mark><code>HAVING</code></mark> clause to further trim down our output by applying a condition on the same <mark><code>COUNT(*)</code></mark> expression we were using for the ‘frequency’ column.<br>
+Since we only want the duplicate records to be returned - we would like that <mark><code>COUNT(*)</code></mark> value to be greater than 1.</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span>
+  id<span class="token punctuation">,</span>
+  log_date<span class="token punctuation">,</span>
+  measure<span class="token punctuation">,</span>
+  measure_value<span class="token punctuation">,</span>
+  systolic<span class="token punctuation">,</span>
+  diastolic
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span>
+  id<span class="token punctuation">,</span>
+  log_date<span class="token punctuation">,</span>
+  measure<span class="token punctuation">,</span>
+  measure_value<span class="token punctuation">,</span>
+  systolic<span class="token punctuation">,</span>
+  diastolic
+<span class="token keyword">HAVING</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&gt;</span><span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre>
+<p><strong>OR</strong> - <strong>Using TEMP Tables</strong></p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token comment">-- Don't forget to clean up any existing temp tables!</span>
+<span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> unique_duplicate_records<span class="token punctuation">;</span>
+
+<span class="token keyword">CREATE</span> <span class="token keyword">TEMPORARY</span> <span class="token keyword">TABLE</span> unique_duplicate_records <span class="token keyword">AS</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span>
+  id<span class="token punctuation">,</span>
+  log_date<span class="token punctuation">,</span>
+  measure<span class="token punctuation">,</span>
+  measure_value<span class="token punctuation">,</span>
+  systolic<span class="token punctuation">,</span>
+  diastolic
+<span class="token keyword">HAVING</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- Finally let's inspect the top 10 rows of our temp table</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> unique_duplicate_records
+<span class="token keyword">LIMIT</span> <span class="token number">10</span><span class="token punctuation">;</span>
+</code></pre>
+<p>📝 Note that we cannot use the same <code>*</code> within the <code>GROUP BY</code> grouping elements as it will throw a syntax error.</p>
+<p>✅ <strong>Retaining Duplicate Counts</strong><br>
+Let’s say for example - we want to know which exact records are duplicated and also how many times they appeared.</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">WITH</span> groupby_counts <span class="token keyword">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword">SELECT</span>
+    id<span class="token punctuation">,</span>
+    log_date<span class="token punctuation">,</span>
+    measure<span class="token punctuation">,</span>
+    measure_value<span class="token punctuation">,</span>
+    systolic<span class="token punctuation">,</span>
+    diastolic<span class="token punctuation">,</span>
+    <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> frequency
+  <span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+  <span class="token keyword">GROUP</span> <span class="token keyword">BY</span>
+    id<span class="token punctuation">,</span>
+    log_date<span class="token punctuation">,</span>
+    measure<span class="token punctuation">,</span>
+    measure_value<span class="token punctuation">,</span>
+    systolic<span class="token punctuation">,</span>
+    diastolic
+<span class="token punctuation">)</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> groupby_counts
+<span class="token keyword">WHERE</span> frequency <span class="token operator">&gt;</span> <span class="token number">1</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> frequency <span class="token keyword">DESC</span>
+<span class="token keyword">LIMIT</span> <span class="token number">10</span><span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">id</th>
+<th align="center">log_date</th>
+<th align="center">measure</th>
+<th align="center">measure_value</th>
+<th align="center">systolic</th>
+<th align="center">diastolic</th>
+<th align="center">frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">054250c692e07a9fa9e62e345231df4b54ff435d</td>
+<td align="center">2019-12-06</td>
+<td align="center">blood_glucose</td>
+<td align="center">401</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">104</td>
+</tr>
+<tr>
+<td align="center">054250c692e07a9fa9e62e345231df4b54ff435d</td>
+<td align="center">2019-12-05</td>
+<td align="center">blood_glucose</td>
+<td align="center">401</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">77</td>
+</tr>
+<tr>
+<td align="center">054250c692e07a9fa9e62e345231df4b54ff435d</td>
+<td align="center">2019-12-04</td>
+<td align="center">blood_glucose</td>
+<td align="center">401</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">72</td>
+</tr>
+<tr>
+<td align="center">054250c692e07a9fa9e62e345231df4b54ff435d</td>
+<td align="center">2019-12-07</td>
+<td align="center">blood_glucose</td>
+<td align="center">401</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">70</td>
+</tr>
+<tr>
+<td align="center">054250c692e07a9fa9e62e345231df4b54ff435d</td>
+<td align="center">2020-09-30</td>
+<td align="center">blood_glucose</td>
+<td align="center">401</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">39</td>
+</tr>
+<tr>
+<td align="center">054250c692e07a9fa9e62e345231df4b54ff435d</td>
+<td align="center">2020-09-29</td>
+<td align="center">blood_glucose</td>
+<td align="center">401</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">24</td>
+</tr>
+<tr>
+<td align="center">054250c692e07a9fa9e62e345231df4b54ff435d</td>
+<td align="center">2020-10-02</td>
+<td align="center">blood_glucose</td>
+<td align="center">401</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">18</td>
+</tr>
+<tr>
+<td align="center">054250c692e07a9fa9e62e345231df4b54ff435d</td>
+<td align="center">2019-12-10</td>
+<td align="center">blood_glucose</td>
+<td align="center">140</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">12</td>
+</tr>
+<tr>
+<td align="center">054250c692e07a9fa9e62e345231df4b54ff435d</td>
+<td align="center">2019-12-11</td>
+<td align="center">blood_glucose</td>
+<td align="center">220</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">12</td>
+</tr>
+<tr>
+<td align="center">054250c692e07a9fa9e62e345231df4b54ff435d</td>
+<td align="center">2020-04-15</td>
+<td align="center">blood_glucose</td>
+<td align="center">236</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">12</td>
+</tr>
+</tbody>
+</table><h2 id="star-exercises-2">⭐️ Exercises</h2>
+<ol>
+<li><strong>Which  <code>id</code>  value has the most number of duplicate records in the  <code>health.user_logs</code>  table?</strong></li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token comment">-- Use CTE to create a table with a new column to COUNT the number of duplicated records using GROUP BY. </span>
+<span class="token keyword">WITH</span> cte_duplicate_records <span class="token keyword">AS</span> <span class="token punctuation">(</span>
+<span class="token keyword">SELECT</span>
+  id<span class="token punctuation">,</span>
+  log_date<span class="token punctuation">,</span>
+  measure<span class="token punctuation">,</span>
+  measure_value<span class="token punctuation">,</span>
+  systolic<span class="token punctuation">,</span>
+  diastolic<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> frequency
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> 
+  id<span class="token punctuation">,</span>
+  log_date<span class="token punctuation">,</span>
+  measure<span class="token punctuation">,</span>
+  measure_value<span class="token punctuation">,</span>
+  systolic<span class="token punctuation">,</span>
+  diastolic
+<span class="token punctuation">)</span>
+
+<span class="token keyword">SELECT</span>
+  id<span class="token punctuation">,</span>
+  <span class="token function">SUM</span><span class="token punctuation">(</span>frequency<span class="token punctuation">)</span> <span class="token keyword">AS</span> total_duplicates <span class="token comment">-- Use SUM to add up frequencies of each id since we are grouping by ids.</span>
+<span class="token keyword">FROM</span> cte_duplicate_records
+<span class="token keyword">WHERE</span> frequency <span class="token operator">&gt;</span> <span class="token number">1</span>  <span class="token comment">-- To filter all records which appeared more than once which makes them duplicates.</span>
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> id
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> total_duplicates <span class="token keyword">DESC</span>
+<span class="token keyword">LIMIT</span> <span class="token number">10</span><span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">id</th>
+<th align="center">total_duplicates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">054250c692e07a9fa9e62e345231df4b54ff435d</td>
+<td align="center">17279</td>
+</tr>
+<tr>
+<td align="center">ee653a96022cc3878e76d196b1667d95beca2db6</td>
+<td align="center">758</td>
+</tr>
+<tr>
+<td align="center">0f7b13f3f0512e6546b8d2c0d56e564a2408536a</td>
+<td align="center">485</td>
+</tr>
+<tr>
+<td align="center">6c2f9a8372dac248192c50219c97f9087ab778ba</td>
+<td align="center">106</td>
+</tr>
+<tr>
+<td align="center">981197b530b9ec5032abb0ffe4b69dba3649f467</td>
+<td align="center">77</td>
+</tr>
+<tr>
+<td align="center">907d1231aed4a3540b30f91b336130746042ce47</td>
+<td align="center">69</td>
+</tr>
+<tr>
+<td align="center">316f2f73322d8edcea74d4f22b6749bf2dc3dd9a</td>
+<td align="center">58</td>
+</tr>
+<tr>
+<td align="center">df0da942ab95c538f96d70dead8353e348845efe</td>
+<td align="center">45</td>
+</tr>
+<tr>
+<td align="center">abc634a555bbba7d6d6584171fdfa206ebf6c9a0</td>
+<td align="center">42</td>
+</tr>
+<tr>
+<td align="center">576fdb528e5004f733912fae3020e7d322dbc31a</td>
+<td align="center">41</td>
+</tr>
+</tbody>
+</table><ol start="2">
+<li><strong>Which  <code>log_date</code>  value had the most duplicate records after removing the max duplicate  <code>id</code>  value from question 1?</strong></li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token comment">-- Using CTE from previous question to solve this problem.</span>
+<span class="token keyword">WITH</span> cte_duplicate_records <span class="token keyword">AS</span> <span class="token punctuation">(</span>
+<span class="token keyword">SELECT</span>
+  id<span class="token punctuation">,</span>
+  log_date<span class="token punctuation">,</span>
+  measure<span class="token punctuation">,</span>
+  measure_value<span class="token punctuation">,</span>
+  systolic<span class="token punctuation">,</span>
+  diastolic<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> frequency
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token keyword">WHERE</span> id <span class="token operator">!=</span> <span class="token string">'054250c692e07a9fa9e62e345231df4b54ff435d'</span> <span class="token comment">-- This was the id with the most duplicated records</span>
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> 
+  id<span class="token punctuation">,</span>
+  log_date<span class="token punctuation">,</span>
+  measure<span class="token punctuation">,</span>
+  measure_value<span class="token punctuation">,</span>
+  systolic<span class="token punctuation">,</span>
+  diastolic
+<span class="token punctuation">)</span>
+
+<span class="token keyword">SELECT</span>
+  log_date<span class="token punctuation">,</span>
+  <span class="token function">SUM</span><span class="token punctuation">(</span>frequency<span class="token punctuation">)</span> <span class="token keyword">AS</span> total_duplicates
+<span class="token keyword">FROM</span> cte_duplicate_records
+<span class="token keyword">WHERE</span> frequency <span class="token operator">&gt;</span> <span class="token number">1</span>
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> log_date
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> total_duplicates <span class="token keyword">DESC</span>
+<span class="token keyword">LIMIT</span> <span class="token number">10</span><span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">log_date</th>
+<th align="center">total_duplicates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">2019-12-11</td>
+<td align="center">55</td>
+</tr>
+<tr>
+<td align="center">2019-12-10</td>
+<td align="center">22</td>
+</tr>
+<tr>
+<td align="center">2020-04-11</td>
+<td align="center">20</td>
+</tr>
+<tr>
+<td align="center">2020-03-08</td>
+<td align="center">20</td>
+</tr>
+<tr>
+<td align="center">2020-06-12</td>
+<td align="center">19</td>
+</tr>
+<tr>
+<td align="center">2020-07-30</td>
+<td align="center">18</td>
+</tr>
+<tr>
+<td align="center">2020-07-31</td>
+<td align="center">17</td>
+</tr>
+<tr>
+<td align="center">2020-06-11</td>
+<td align="center">16</td>
+</tr>
+<tr>
+<td align="center">2020-07-20</td>
+<td align="center">16</td>
+</tr>
+<tr>
+<td align="center">2020-06-14</td>
+<td align="center">16</td>
+</tr>
+</tbody>
+</table><ol start="3">
+<li><strong>Which  <code>measure_value</code>  had the most occurences in the  <code>health.user_logs</code>  value when  <code>measure = 'weight'</code>?</strong></li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span> 
+  measure_value<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> frequency
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token keyword">WHERE</span> measure <span class="token operator">=</span> <span class="token string">'weight'</span>
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> measure_value
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> frequency <span class="token keyword">DESC</span>
+<span class="token keyword">LIMIT</span> <span class="token number">10</span><span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">measure_value</th>
+<th align="center">frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">68.49244787</td>
+<td align="center">109</td>
+</tr>
+<tr>
+<td align="center">67.58526313</td>
+<td align="center">107</td>
+</tr>
+<tr>
+<td align="center">63.50288</td>
+<td align="center">44</td>
+</tr>
+<tr>
+<td align="center">62.595696</td>
+<td align="center">44</td>
+</tr>
+<tr>
+<td align="center">64.863656</td>
+<td align="center">39</td>
+</tr>
+<tr>
+<td align="center">62.142104</td>
+<td align="center">39</td>
+</tr>
+<tr>
+<td align="center">65.317248</td>
+<td align="center">38</td>
+</tr>
+<tr>
+<td align="center">65.77084</td>
+<td align="center">37</td>
+</tr>
+<tr>
+<td align="center">78.6982762</td>
+<td align="center">29</td>
+</tr>
+<tr>
+<td align="center">79.15186857</td>
+<td align="center">27</td>
+</tr>
+</tbody>
+</table><ol start="4">
+<li><strong>How many single duplicated rows exist when  <code>measure = 'blood_pressure'</code>  in the  <code>health.user_logs</code>? How about the total number of duplicate records in the same table?</strong></li>
+</ol>
+<ul>
+<li>Single duplicated rows here means - how many rows of duplicate records are present?</li>
+<li>Total no. of duplicates  --&gt; <code>SUM(frequency)</code></li>
+</ul>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">WITH</span> cte_blood_pressure <span class="token keyword">AS</span> <span class="token punctuation">(</span>
+<span class="token keyword">SELECT</span>
+  id<span class="token punctuation">,</span>
+  log_date<span class="token punctuation">,</span>
+  measure<span class="token punctuation">,</span>
+  measure_value<span class="token punctuation">,</span>
+  systolic<span class="token punctuation">,</span>
+  diastolic<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> frequency
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token keyword">WHERE</span> measure <span class="token operator">=</span> <span class="token string">'blood_pressure'</span>
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> 
+  id<span class="token punctuation">,</span>
+  log_date<span class="token punctuation">,</span>
+  measure<span class="token punctuation">,</span>
+  measure_value<span class="token punctuation">,</span>
+  systolic<span class="token punctuation">,</span>
+  diastolic
+<span class="token punctuation">)</span>
+
+<span class="token keyword">SELECT</span> 
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> single_duplicate_rows_count<span class="token punctuation">,</span>
+  <span class="token function">SUM</span><span class="token punctuation">(</span>frequency<span class="token punctuation">)</span> <span class="token keyword">AS</span> total_duplicate_count
+<span class="token keyword">FROM</span> cte_blood_pressure
+<span class="token keyword">WHERE</span> frequency <span class="token operator">&gt;</span> <span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">single_duplicate_rows_count</th>
+<th align="center">total_duplicate_count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">147</td>
+<td align="center">301</td>
+</tr>
+</tbody>
+</table><ol start="5">
+<li><strong>What percentage of records  have <code>measure_value = 0</code>  when  <code>measure = 'blood_pressure'</code>  in the  <code>health.user_logs</code>  table? How many records are there also for this same condition?</strong></li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">WITH</span> cte_blood_pressure <span class="token keyword">AS</span> <span class="token punctuation">(</span>
+<span class="token keyword">SELECT</span>
+  measure_value<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> frequency<span class="token punctuation">,</span>
+  <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> overall_total
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token keyword">WHERE</span> measure <span class="token operator">=</span> <span class="token string">'blood_pressure'</span>
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> measure_value
+<span class="token punctuation">)</span>
+
+<span class="token keyword">SELECT</span> 
+  measure_value<span class="token punctuation">,</span>
+  frequency<span class="token punctuation">,</span>
+  overall_total<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">100</span> <span class="token operator">*</span> frequency::<span class="token keyword">NUMERIC</span> <span class="token operator">/</span> overall_total<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> percentage
+<span class="token keyword">FROM</span> cte_blood_pressure
+<span class="token keyword">WHERE</span> measure_value <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">measure_value</th>
+<th align="center">frequency</th>
+<th align="center">overall_total</th>
+<th align="center">percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0</td>
+<td align="center">562</td>
+<td align="center">2417</td>
+<td align="center">23.25</td>
+</tr>
+</tbody>
+</table><ol start="6">
+<li><strong>What percentage of records are duplicates in the  <code>health.user_logs</code>  table?</strong></li>
+</ol>
+<ul>
+<li>This is seemingly simple question is actually deceivingly tricky - mainly because of how one would set the numerator for this calculation!</li>
+<li>We will use a <mark><code>SUM</code></mark> and a <mark><code>CASE WHEN</code></mark> statement to make this happen in a single query.</li>
+</ul>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">WITH</span> cte_duplicate_records <span class="token keyword">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword">SELECT</span>
+    id<span class="token punctuation">,</span>
+    log_date<span class="token punctuation">,</span>
+    measure<span class="token punctuation">,</span>
+    measure_value<span class="token punctuation">,</span>
+    systolic<span class="token punctuation">,</span>
+    diastolic<span class="token punctuation">,</span>
+    <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> frequency
+  <span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+  <span class="token keyword">GROUP</span> <span class="token keyword">BY</span>
+    id<span class="token punctuation">,</span>
+    log_date<span class="token punctuation">,</span>
+    measure<span class="token punctuation">,</span>
+    measure_value<span class="token punctuation">,</span>
+    systolic<span class="token punctuation">,</span>
+    diastolic
+<span class="token punctuation">)</span>
+
+<span class="token keyword">SELECT</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token number">100</span> <span class="token operator">*</span> <span class="token function">SUM</span><span class="token punctuation">(</span><span class="token keyword">CASE</span>
+      <span class="token keyword">WHEN</span> frequency <span class="token operator">&gt;</span> <span class="token number">1</span> <span class="token keyword">THEN</span> frequency <span class="token operator">-</span> <span class="token number">1</span>   <span class="token comment">--(-1) to count the actual duplicates</span>
+      <span class="token keyword">ELSE</span> <span class="token number">0</span> 
+      <span class="token keyword">END</span><span class="token punctuation">)</span>::<span class="token keyword">NUMERIC</span> <span class="token operator">/</span>
+      <span class="token function">SUM</span><span class="token punctuation">(</span>frequency<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> percentage
+<span class="token keyword">FROM</span> cte_duplicate_records<span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">29.36</td>
+</tr>
+</tbody>
+</table><p><strong>Alternate Solution using Subqueries</strong></p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">WITH</span> cte_unique_records <span class="token keyword">AS</span> <span class="token punctuation">(</span>
+<span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token punctuation">)</span>
+
+<span class="token keyword">SELECT</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token number">100</span> <span class="token operator">*</span> 
+  <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">FROM</span> cte_unique_records<span class="token punctuation">)</span><span class="token punctuation">)</span>::<span class="token keyword">NUMERIC</span> <span class="token operator">/</span>
+  <span class="token punctuation">(</span><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> duplicate_percentage<span class="token punctuation">;</span>
+</code></pre>
+<hr>
+<h2 id="pushpin-summary-statistics-bar_chart">📌 Summary Statistics 📊</h2>
+<h3 id="triangular_flag_on_post-measures-of-central-tendency-point_right-mean-median-and-mode">🚩 Measures of Central Tendency 👉 Mean, Median and Mode</h3>
+<ul>
+<li>
+<p><strong>Mean</strong> - Also known as Average, it is the sum of all values divided by the total count of values for a set of numbers.<br>
+<span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>μ</mi><mo>=</mo><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><msub><mi>X</mi><mi>i</mi></msub></mrow><mi>N</mi></mfrac></mrow><annotation encoding="application/x-tex">\mu = \frac{\sum_{i=1}^N X_i}{N}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.625em; vertical-align: -0.19444em;"></span><span class="mord mathnormal">μ</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 2.35694em; vertical-align: -0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.67094em;"><span class="" style="top: -2.314em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.10903em;">N</span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.68971em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position: relative; top: -5e-06em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.981231em;"><span class="" style="top: -2.40029em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span class="" style="top: -3.2029em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right: 0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.29971em;"><span class=""></span></span></span></span></span></span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.311664em;"><span class="" style="top: -2.55em; margin-left: -0.07847em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.686em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></span></p>
+</li>
+<li>
+<p><strong>Median</strong> - The median (also known as the 50th percentile value) is the value separating the top half from the bottom half of a data sample, a population, or a probability distribution. It is simply the <strong>middle value</strong> in an ordered (ascending or descending) list of numbers.</p>
+</li>
+<li>
+<p><strong>Mode</strong> - The mode is simply calculated as the value that appears the most number of times i.e the most frequent value in the dataset. Also, a given set of observations can have more than one mode.<br>
+<img src="https://cdn.educba.com/academy/wp-content/uploads/2020/02/Statistics-Formula.jpg.webp" alt="enter image description here"></p>
+</li>
+</ul>
+<p>Some flavours of SQL actually have implemented median and mode values as regular functions like the <mark><code>AVG</code></mark> function. But, in PostgreSQL it’s a little tricky!</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span>
+  <span class="token function">AVG</span><span class="token punctuation">(</span>example_values<span class="token punctuation">)</span> <span class="token keyword">AS</span> mean_value<span class="token punctuation">,</span>
+  PERCENTILE_CONT<span class="token punctuation">(</span><span class="token number">0.5</span><span class="token punctuation">)</span> <span class="token keyword">WITHIN</span> <span class="token keyword">GROUP</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> example_values<span class="token punctuation">)</span> <span class="token keyword">AS</span> median_value<span class="token punctuation">,</span>
+  MODE<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">WITHIN</span> <span class="token keyword">GROUP</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> example_values<span class="token punctuation">)</span> <span class="token keyword">AS</span> mode_value
+<span class="token keyword">FROM</span> sample_data<span class="token punctuation">;</span>
+</code></pre>
+<h3 id="triangular_flag_on_post-spread-of-the-data-point_right-min-max-and-range">🚩 Spread of the Data 👉 Min, Max and Range</h3>
+<p>The <strong>minimum</strong> and <strong>maximum</strong> values of observations in a dataset help us identify the boundaries of where our data exists.<br>
+We use the <strong>range</strong> calculation to show the total possible limits of our data by simply calculating the difference between the max and min values from our data.</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span>
+  <span class="token function">MIN</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> minimum_value<span class="token punctuation">,</span>
+  <span class="token function">MAX</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> maximum_value<span class="token punctuation">,</span>
+  <span class="token function">MAX</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">MIN</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> range_value
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token keyword">WHERE</span> measure <span class="token operator">=</span> <span class="token string">'weight'</span><span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">minimum_value</th>
+<th align="center">maximum_value</th>
+<th align="center">range_value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0</td>
+<td align="center">39642120</td>
+<td align="center">39642120</td>
+</tr>
+</tbody>
+</table><h3 id="triangular_flag_on_post-variance-and-standard-deviation">🚩 Variance and Standard Deviation</h3>
+<p><strong>Variance</strong> and <strong>Standard Deviation</strong> are used to describe the “spread” of the data about the mean value. Also, the variance is simply the square of the standard deviation.</p>
+<p><strong>Variance and Std.Dev Formulae:</strong>			<br>
+<span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msup><mi>σ</mi><mn>2</mn></msup><mo>=</mo><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mi>μ</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></mfrac></mrow><annotation encoding="application/x-tex">\sigma^2 = \frac{\sum_{i=1}^N (x_i -\mu)^2}{N-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.864108em; vertical-align: 0em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.03588em;">σ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.864108em;"><span class="" style="top: -3.113em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 2.44027em; vertical-align: -0.76933em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.67094em;"><span class="" style="top: -2.314em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.10903em;">N</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mord">1</span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.68971em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position: relative; top: -5e-06em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.981231em;"><span class="" style="top: -2.40029em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span class="" style="top: -3.2029em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right: 0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.29971em;"><span class=""></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.311664em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mord mathnormal">μ</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.814108em;"><span class="" style="top: -3.063em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.76933em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></span><br>
+<span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>σ</mi><mo>=</mo><msqrt><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mi>μ</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></mfrac></msqrt></mrow><annotation encoding="application/x-tex">\sigma = \sqrt\frac{\sum_{i=1}^N (x_i -\mu)^2}{N-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.43056em; vertical-align: 0em;"></span><span class="mord mathnormal" style="margin-right: 0.03588em;">σ</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 3.04em; vertical-align: -0.955319em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 2.08468em;"><span class="svg-align" style="top: -5em;"><span class="pstrut" style="height: 5em;"></span><span class="mord" style="padding-left: 1em;"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.67094em;"><span class="" style="top: -2.314em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.10903em;">N</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mord">1</span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.68971em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position: relative; top: -5e-06em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.981231em;"><span class="" style="top: -2.40029em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span class="" style="top: -3.2029em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right: 0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.29971em;"><span class=""></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.311664em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mord mathnormal">μ</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.740108em;"><span class="" style="top: -2.989em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.76933em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span><span class="" style="top: -4.04468em;"><span class="pstrut" style="height: 5em;"></span><span class="hide-tail" style="min-width: 1.02em; height: 3.08em;"><svg width="400em" height="3.08em" viewBox="0 0 400000 3240" preserveAspectRatio="xMinYMin slice"><path d="M473,2793
+c339.3,-1799.3,509.3,-2700,510,-2702 l0 -0
+c3.3,-7.3,9.3,-11,18,-11 H400000v40H1017.7
+s-90.5,478,-276.2,1466c-185.7,988,-279.5,1483,-281.5,1485c-2,6,-10,9,-24,9
+c-8,0,-12,-0.7,-12,-2c0,-1.3,-5.3,-32,-16,-92c-50.7,-293.3,-119.7,-693.3,-207,-1200
+c0,-1.3,-5.3,8.7,-16,30c-10.7,21.3,-21.3,42.7,-32,64s-16,33,-16,33s-26,-26,-26,-26
+s76,-153,76,-153s77,-151,77,-151c0.7,0.7,35.7,202,105,604c67.3,400.7,102,602.7,104,
+606zM1001 80h400000v40H1017.7z"></path></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.955319em;"><span class=""></span></span></span></span></span></span></span></span></span></span></p>
+<pre class=" language-sql"><code class="prism  language-sql"> <span class="token keyword">WITH</span> sample_data <span class="token punctuation">(</span>example_values<span class="token punctuation">)</span> <span class="token keyword">AS</span> <span class="token punctuation">(</span>
+ <span class="token keyword">VALUES</span>
+ <span class="token punctuation">(</span><span class="token number">82</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">51</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">144</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">84</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">120</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">148</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">148</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">108</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">160</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">86</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+<span class="token keyword">SELECT</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span>VARIANCE<span class="token punctuation">(</span>example_values<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> variance_value<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span>STDDEV<span class="token punctuation">(</span>example_values<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> standard_dev_value<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">AVG</span><span class="token punctuation">(</span>example_values<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> mean_value<span class="token punctuation">,</span>
+  PERCENTILE_CONT<span class="token punctuation">(</span><span class="token number">0.5</span><span class="token punctuation">)</span> <span class="token keyword">WITHIN</span> <span class="token keyword">GROUP</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> example_values<span class="token punctuation">)</span> <span class="token keyword">AS</span> median_value<span class="token punctuation">,</span>
+  MODE<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">WITHIN</span> <span class="token keyword">GROUP</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> example_values<span class="token punctuation">)</span> <span class="token keyword">AS</span> mode_value
+<span class="token keyword">FROM</span> sample_data<span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">variance_value</th>
+<th align="center">standard_dev_value</th>
+<th align="center">mean_value</th>
+<th align="center">median_value</th>
+<th align="center">mode_value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1340.99</td>
+<td align="center">36.62</td>
+<td align="center">113.1</td>
+<td align="center">114</td>
+<td align="center">148</td>
+</tr>
+</tbody>
+</table><p>We’ve talked about the variance and standard deviation being a measure of spread - but what do we mean by this?</p>
+<p>One of the best examples to explain this is to take a look at the humble bell curve, or normal distribution.Now there is a huge caveat to this explanation in that - data is not ALWAYS normally distributed.<br>
+<img src="https://www.w3schools.com/statistics/img_normal_distribution.svg" alt="Normal Distribution"></p>
+<h3 id="triangular_flag_on_post-confidence-intervals-or-the-empirical-rule">🚩 Confidence Intervals or The Empirical Rule</h3>
+<p>One other way to interpret the standard deviation is the <code>Empirical Rule</code>.<br>
+Essentially if our data is approximately normally distributed (it looks like a bell curve) - we can make rough generalisations about how much percentage of the total lies between different ranges related to our standard deviation values.</p>
+<p>These boundaries are also known as <strong>Confidence Intervals</strong> or confidence bands - ranges where we are fairly sure that the data will lie within!<br>
+<img src="https://cdn.corporatefinanceinstitute.com/assets/empirical-rule2.png" alt="enter image description here"><br>
+We refer to these ranges as “<strong>one standard deviation about the mean</strong>” contains 68% of values etc.</p>
+<p>One popular method to detect an uneven distribution in the dataset is to compare the average, mode and median values - this statistical property is known as a <strong>Skew</strong> in the distribution.<br>
+<img src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Relationship_between_mean_and_median_under_different_skewness.png" alt="Skewness"></p>
+<h3 id="triangular_flag_on_post-calculating-all-the-summary-statistics">🚩 Calculating All The Summary Statistics</h3>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span>
+  <span class="token string">'weight'</span> <span class="token keyword">AS</span> measure<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">MIN</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> minimum_value<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">MAX</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> maximum_value<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">AVG</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> mean_value<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span>
+    <span class="token comment">-- this function actually returns a float which is incompatible with ROUND!</span>
+    <span class="token comment">-- we use this cast function to convert the output type to NUMERIC</span>
+    CAST<span class="token punctuation">(</span>PERCENTILE_CONT<span class="token punctuation">(</span><span class="token number">0.5</span><span class="token punctuation">)</span> <span class="token keyword">WITHIN</span> <span class="token keyword">GROUP</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> <span class="token keyword">NUMERIC</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token number">2</span>
+  <span class="token punctuation">)</span> <span class="token keyword">AS</span> median_value<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span>
+    MODE<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">WITHIN</span> <span class="token keyword">GROUP</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token number">2</span>
+  <span class="token punctuation">)</span> <span class="token keyword">AS</span> mode_value<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span>STDDEV<span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> standard_deviation<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span>VARIANCE<span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> variance_value
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token keyword">WHERE</span> measure <span class="token operator">=</span> <span class="token string">'weight'</span><span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">measure</th>
+<th align="center">minimum_value</th>
+<th align="center">maximum_value</th>
+<th align="center">mean_value</th>
+<th align="center">median_value</th>
+<th align="center">mode_value</th>
+<th align="center">standard_deviation</th>
+<th align="center">variance_value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">weight</td>
+<td align="center">0</td>
+<td align="center">39642120</td>
+<td align="center">28786.85</td>
+<td align="center">75.98</td>
+<td align="center">68.49</td>
+<td align="center">1062759.55</td>
+<td align="center">1.12946E+12</td>
+</tr>
+</tbody>
+</table><p>Carefully observe the summary statistics to identify issues like <mark>outliers/extreme values</mark> in the dataset.</p>
+<p>A few questions come to mind straightaway :</p>
+<ul>
+<li>Does it make sense to have such low minimum values and such a high value?</li>
+<li>Why is the average value 28,786kg but the median is 75.98kg?</li>
+<li>The standard deviation of values is WAY too large at 1,062,759kg</li>
+</ul>
+<p>We now understand that there are outliers in the minimum and maximum values which are affecting the mean value, standard deviation and variance values. So this data needs to be cleaned!!</p>
+<h2 id="star-exercises-3">⭐️ Exercises</h2>
+<ol>
+<li><strong>What is the average, median and mode values of blood glucose values to 2 decimal places?</strong></li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">AVG</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> mean_value<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span>CAST<span class="token punctuation">(</span>PERCENTILE_CONT<span class="token punctuation">(</span><span class="token number">0.5</span><span class="token punctuation">)</span> <span class="token keyword">WITHIN</span> <span class="token keyword">GROUP</span><span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> <span class="token keyword">NUMERIC</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> median_value<span class="token punctuation">,</span>
+<span class="token comment">-- this function actually returns a float which is incompatible with ROUND!</span>
+<span class="token comment">-- we use this cast function to convert the output type to NUMERIC</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span>MODE<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">WITHIN</span> <span class="token keyword">GROUP</span><span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> mode_value
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token keyword">WHERE</span> measure <span class="token operator">=</span> <span class="token string">'blood_glucose'</span><span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">mean_value</th>
+<th align="center">median_value</th>
+<th align="center">mode_value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">177.35</td>
+<td align="center">154</td>
+<td align="center">401</td>
+</tr>
+</tbody>
+</table><ol start="2">
+<li><strong>What is the most frequently occuring  <code>measure_value</code>  for all blood glucose measurements?</strong></li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span>
+  measure_value<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> frequency
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token keyword">WHERE</span> measure <span class="token operator">=</span> <span class="token string">'blood_glucose'</span>
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> measure_value
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> frequency <span class="token keyword">DESC</span>
+<span class="token keyword">LIMIT</span> <span class="token number">10</span><span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">measure_value</th>
+<th align="center">frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">401</td>
+<td align="center">433</td>
+</tr>
+<tr>
+<td align="center">117</td>
+<td align="center">350</td>
+</tr>
+<tr>
+<td align="center">118</td>
+<td align="center">307</td>
+</tr>
+<tr>
+<td align="center">115</td>
+<td align="center">290</td>
+</tr>
+<tr>
+<td align="center">126</td>
+<td align="center">290</td>
+</tr>
+<tr>
+<td align="center">122</td>
+<td align="center">289</td>
+</tr>
+<tr>
+<td align="center">108</td>
+<td align="center">287</td>
+</tr>
+<tr>
+<td align="center">123</td>
+<td align="center">283</td>
+</tr>
+<tr>
+<td align="center">125</td>
+<td align="center">282</td>
+</tr>
+<tr>
+<td align="center">120</td>
+<td align="center">281</td>
+</tr>
+</tbody>
+</table><p><strong>OR</strong> if we only want to know the exact <code>measure_value</code></p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span>
+  MODE<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">WITHIN</span> <span class="token keyword">GROUP</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> mode
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token keyword">WHERE</span> measure <span class="token operator">=</span> <span class="token string">'blood_glucose'</span><span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">mode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">401</td>
+</tr>
+</tbody>
+</table><ol start="3">
+<li><strong>Calculate the 2 Pearson Coefficient of Skewness for blood glucose measures given the following formulas:</strong><br>
+<span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>C</mi><mi>o</mi><mi>e</mi><mi>f</mi><mi>f</mi><mi>i</mi><mi>c</mi><mi>i</mi><mi>e</mi><mi>n</mi><mi>t</mi><mn>1</mn><mo>:</mo><mi>M</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>S</mi><mi>k</mi><mi>e</mi><mi>w</mi><mi>n</mi><mi>e</mi><mi>s</mi><mi>s</mi><mo>=</mo><mfrac><mrow><mi>M</mi><mi>e</mi><mi>a</mi><mi>n</mi><mo>−</mo><mi>M</mi><mi>o</mi><mi>d</mi><mi>e</mi></mrow><mrow><mi>S</mi><mi>t</mi><mi>a</mi><mi>n</mi><mi>d</mi><mi>a</mi><mi>r</mi><mi>d</mi><mi>D</mi><mi>e</mi><mi>v</mi><mi>i</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">Coefficient 1: Mode Skewness = \frac{Mean - Mode}{StandardDeviation}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.88888em; vertical-align: -0.19444em;"></span><span class="mord mathnormal" style="margin-right: 0.07153em;">C</span><span class="mord mathnormal">oe</span><span class="mord mathnormal" style="margin-right: 0.10764em;">ff</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal">i</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mord">1</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 0.69444em; vertical-align: 0em;"></span><span class="mord mathnormal" style="margin-right: 0.10903em;">M</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right: 0.05764em;">S</span><span class="mord mathnormal" style="margin-right: 0.03148em;">k</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right: 0.02691em;">w</span><span class="mord mathnormal">n</span><span class="mord mathnormal">ess</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 2.05744em; vertical-align: -0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.37144em;"><span class="" style="top: -2.314em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal">St</span><span class="mord mathnormal">an</span><span class="mord mathnormal">d</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right: 0.02778em;">r</span><span class="mord mathnormal">d</span><span class="mord mathnormal">De</span><span class="mord mathnormal" style="margin-right: 0.03588em;">v</span><span class="mord mathnormal">ia</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.677em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.10903em;">M</span><span class="mord mathnormal">e</span><span class="mord mathnormal">an</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mord mathnormal" style="margin-right: 0.10903em;">M</span><span class="mord mathnormal">o</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.686em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></span><br>
+<span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>C</mi><mi>o</mi><mi>e</mi><mi>f</mi><mi>f</mi><mi>i</mi><mi>c</mi><mi>i</mi><mi>e</mi><mi>n</mi><mi>t</mi><mn>2</mn><mo>:</mo><mi>M</mi><mi>e</mi><mi>d</mi><mi>i</mi><mi>a</mi><mi>n</mi><mi>S</mi><mi>k</mi><mi>e</mi><mi>w</mi><mi>n</mi><mi>e</mi><mi>s</mi><mi>s</mi><mo>=</mo><mn>3</mn><mo>∗</mo><mfrac><mrow><mi>M</mi><mi>e</mi><mi>a</mi><mi>n</mi><mo>−</mo><mi>M</mi><mi>e</mi><mi>d</mi><mi>i</mi><mi>a</mi><mi>n</mi></mrow><mrow><mi>S</mi><mi>t</mi><mi>a</mi><mi>n</mi><mi>d</mi><mi>a</mi><mi>r</mi><mi>d</mi><mi>D</mi><mi>e</mi><mi>v</mi><mi>i</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">Coefficient 2: Median Skewness = 3*\frac{Mean - Median}{StandardDeviation}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.88888em; vertical-align: -0.19444em;"></span><span class="mord mathnormal" style="margin-right: 0.07153em;">C</span><span class="mord mathnormal">oe</span><span class="mord mathnormal" style="margin-right: 0.10764em;">ff</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal">i</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mord">2</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 0.69444em; vertical-align: 0em;"></span><span class="mord mathnormal" style="margin-right: 0.10903em;">M</span><span class="mord mathnormal">e</span><span class="mord mathnormal">d</span><span class="mord mathnormal">ian</span><span class="mord mathnormal" style="margin-right: 0.05764em;">S</span><span class="mord mathnormal" style="margin-right: 0.03148em;">k</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right: 0.02691em;">w</span><span class="mord mathnormal">n</span><span class="mord mathnormal">ess</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 0.64444em; vertical-align: 0em;"></span><span class="mord">3</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 2.05744em; vertical-align: -0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.37144em;"><span class="" style="top: -2.314em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal">St</span><span class="mord mathnormal">an</span><span class="mord mathnormal">d</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right: 0.02778em;">r</span><span class="mord mathnormal">d</span><span class="mord mathnormal">De</span><span class="mord mathnormal" style="margin-right: 0.03588em;">v</span><span class="mord mathnormal">ia</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.677em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.10903em;">M</span><span class="mord mathnormal">e</span><span class="mord mathnormal">an</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mord mathnormal" style="margin-right: 0.10903em;">M</span><span class="mord mathnormal">e</span><span class="mord mathnormal">d</span><span class="mord mathnormal">ian</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.686em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></span></li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">WITH</span> cte_blood_glucose <span class="token keyword">AS</span> <span class="token punctuation">(</span>
+<span class="token keyword">SELECT</span>
+  <span class="token function">AVG</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> mean_value<span class="token punctuation">,</span>
+  PERCENTILE_CONT<span class="token punctuation">(</span><span class="token number">0.5</span><span class="token punctuation">)</span> <span class="token keyword">WITHIN</span> <span class="token keyword">GROUP</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> median_value<span class="token punctuation">,</span>
+  MODE<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">WITHIN</span> <span class="token keyword">GROUP</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> mode_value<span class="token punctuation">,</span>
+  STDDEV<span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> standard_deviation
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token keyword">WHERE</span> measure <span class="token operator">=</span> <span class="token string">'blood_glucose'</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">SELECT</span> 
+  <span class="token punctuation">(</span>mean_value <span class="token operator">-</span> mode_value<span class="token punctuation">)</span> <span class="token operator">/</span> standard_deviation <span class="token keyword">AS</span> pearson_corr_1<span class="token punctuation">,</span>
+  <span class="token number">3</span><span class="token operator">*</span><span class="token punctuation">(</span>mean_value <span class="token operator">-</span> median_value<span class="token punctuation">)</span> <span class="token operator">/</span> standard_deviation <span class="token keyword">AS</span> pearson_corr_2
+<span class="token keyword">FROM</span> cte_blood_glucose<span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center">pearson_corr_1</th>
+<th align="center">pearson_corr_2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">-0.1932489</td>
+<td align="center">0.060523971</td>
+</tr>
+</tbody>
+</table><ul>
+<li>The Skewness terms are quantitative measure of how lopsided a certain distribution is.</li>
+<li>In particularly this is really really useful when you need to find out whether a specific table index has a “skew” in the values - leading to disproportionate allocation of data points to specific buckets or nodes.</li>
+<li>This will be covered in detail later!</li>
+</ul>
+<hr>
+<h2 id="pushpin-distribution-functions">📌 Distribution Functions</h2>
+<h3 id="triangular_flag_on_post-cumulative-distribution-functions-cdf">🚩 Cumulative Distribution Functions (CDF)</h3>
+<p>In mathematical terms, a cumulative distribution function takes a value and returns us the percentile or in other words: the probability of any value between the minimum value of our dataset  <code>X</code>  and the value  <code>V</code>  as shown below:</p>
+<p><span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>F</mi><mo stretchy="false">(</mo><mi>V</mi><mo stretchy="false">)</mo><mo>=</mo><msubsup><mo>∫</mo><mrow><mi>m</mi><mi>i</mi><mi>n</mi><mo stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo></mrow><mi>V</mi></msubsup><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi>d</mi><mi>x</mi><mo>=</mo><mi>P</mi><mi>r</mi><mo stretchy="false">[</mo><mi>m</mi><mi>i</mi><mi>n</mi><mo stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo><mo>≤</mo><mi>x</mi><mo>≤</mo><mi>V</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">F(V)=\int_{min(X)}^V f(x)dx=Pr[min(X)≤x≤V]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathnormal" style="margin-right: 0.13889em;">F</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right: 0.22222em;">V</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 2.67818em; vertical-align: -1.08695em;"></span><span class="mop"><span class="mop op-symbol large-op" style="margin-right: 0.44445em; position: relative; top: -0.001125em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.59123em;"><span class="" style="top: -1.78805em; margin-left: -0.44445em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">min</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight" style="margin-right: 0.07847em;">X</span><span class="mclose mtight">)</span></span></span></span><span class="" style="top: -3.8129em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right: 0.22222em;">V</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 1.08695em;"><span class=""></span></span></span></span></span></span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord mathnormal" style="margin-right: 0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mord mathnormal">d</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathnormal" style="margin-right: 0.13889em;">P</span><span class="mord mathnormal" style="margin-right: 0.02778em;">r</span><span class="mopen">[</span><span class="mord mathnormal">min</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right: 0.07847em;">X</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 0.77194em; vertical-align: -0.13597em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathnormal" style="margin-right: 0.22222em;">V</span><span class="mclose">]</span></span></span></span></span></span></p>
+<p>The beautiful thing about probabilities is that they always add up to 1!</p>
+<blockquote>
+<p><strong>💡 Refer to course notes for working algorithm and thinking</strong></p>
+</blockquote>
+<h3 id="sql-implementation">SQL Implementation</h3>
+<h3 id="round_pushpin-order-and-assign">📍 Order and Assign</h3>
+<ol>
+<li>Order all of the weight measurement values from smallest to largest</li>
+<li>Split them into 100 equal buckets - and assign a number from 1 through to 100 for each bucket.</li>
+</ol>
+<p>We can actually achieve both of these algorithmic steps in a single bit of SQL functionality with the all-powerful  <strong>analytical function</strong>.<br>
+Firstly the  <code>OVER</code>  and  <code>ORDER BY</code>  clauses in the following query help us re-order the dataset by the  <code>measure_value</code>  column - it sorts by ascending order by default)<br>
+Then the  <code>NTILE</code>  window function is used to perform the assignment of numbers 1 through 100 for each row in the records for each  <code>measure_value</code>.</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span>
+  measure_value<span class="token punctuation">,</span>
+  NTILE<span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> percentile
+<span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+<span class="token keyword">WHERE</span> measure <span class="token operator">=</span> <span class="token string">'weight'</span>
+</code></pre>
+<p><em>Only the first 5 and last 5 rows of the output are shown below</em></p>
+
+<table>
+<thead>
+<tr>
+<th align="left">measure_value</th>
+<th align="left">percentile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">0</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">0</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">1.814368</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">2.26796</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">2.26796</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">…</td>
+<td align="left">…</td>
+</tr>
+<tr>
+<td align="left">190.4</td>
+<td align="left">100</td>
+</tr>
+<tr>
+<td align="left">200.487664</td>
+<td align="left">100</td>
+</tr>
+<tr>
+<td align="left">576484</td>
+<td align="left">100</td>
+</tr>
+<tr>
+<td align="left">39642120</td>
+<td align="left">100</td>
+</tr>
+<tr>
+<td align="left">39642120</td>
+<td align="left">100</td>
+</tr>
+</tbody>
+</table><h3 id="round_pushpin-bucket-calculations">📍 Bucket Calculations</h3>
+<ol start="3">
+<li>For each bucket:
+<ul>
+<li>calculate the minimum value and the maximum value for the ceiling and floor values</li>
+<li>count how many records there are</li>
+</ul>
+</li>
+</ol>
+<p>Since we now have our percentile values and our dataset is split into 100 buckets - we can simply use a  <code>GROUP BY</code>  on the  <code>percentile</code>  column from the previous table to calculate our  <code>MIN</code>  and  <code>MAX</code>  <code>measure_value</code>  ranges for each bucket and also the  <code>COUNT</code>  of records for the  <code>percentile_counts</code>  field.</p>
+<p>We can also use the previous query in a CTE so we can pull all the calculations in a single SQL query:</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">WITH</span> percentile_values <span class="token keyword">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword">SELECT</span>
+    measure_value<span class="token punctuation">,</span>
+    NTILE<span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> percentile
+  <span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+  <span class="token keyword">WHERE</span> measure <span class="token operator">=</span> <span class="token string">'weight'</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">SELECT</span>
+  percentile<span class="token punctuation">,</span>
+  <span class="token function">MIN</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> floor_value<span class="token punctuation">,</span>
+  <span class="token function">MAX</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> ceiling_value<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> percentile_counts
+<span class="token keyword">FROM</span> percentile_values
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> percentile
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> percentile<span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="left">percentile</th>
+<th align="left">floor_value</th>
+<th align="left">ceiling_value</th>
+<th align="left">percentile_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">1</td>
+<td align="left">0</td>
+<td align="left">29.029888</td>
+<td align="left">28</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">29.48348</td>
+<td align="left">32.0689544</td>
+<td align="left">28</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">32.205032</td>
+<td align="left">35.380177</td>
+<td align="left">28</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">35.380177</td>
+<td align="left">36.74095</td>
+<td align="left">28</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">36.74095</td>
+<td align="left">37.194546</td>
+<td align="left">28</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">37.194546</td>
+<td align="left">38.101727</td>
+<td align="left">28</td>
+</tr>
+<tr>
+<td align="left">…</td>
+<td align="left">…</td>
+<td align="left">…</td>
+<td align="left">…</td>
+</tr>
+<tr>
+<td align="left">96</td>
+<td align="left">130.54207</td>
+<td align="left">131.570999146</td>
+<td align="left">27</td>
+</tr>
+<tr>
+<td align="left">97</td>
+<td align="left">131.670013428</td>
+<td align="left">132.776</td>
+<td align="left">27</td>
+</tr>
+<tr>
+<td align="left">98</td>
+<td align="left">132.776000977</td>
+<td align="left">133.832000732</td>
+<td align="left">27</td>
+</tr>
+<tr>
+<td align="left">99</td>
+<td align="left">133.89095</td>
+<td align="left">136.531192</td>
+<td align="left">27</td>
+</tr>
+<tr>
+<td align="left">100</td>
+<td align="left">136.531192</td>
+<td align="left">39642120</td>
+<td align="left">27</td>
+</tr>
+</tbody>
+</table><h3 id="round_pushpin-what-do-i-do-with-this">📍 What Do I Do With This?</h3>
+<p>So you’re probably asking yourself - ok cool…so what do I do with this cumulative distribution table then?</p>
+<p>The first place to take a careful look at is the tails of the values - namely  <code>percentile = 1</code>  and  <code>percentile = 100</code></p>
+<p>What do you notice from these two rows alone?</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">percentile</th>
+<th align="left">floor_value</th>
+<th align="left">ceiling_value</th>
+<th align="left">percentile_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">1</td>
+<td align="left">0</td>
+<td align="left">29.029888</td>
+<td align="left">28</td>
+</tr>
+<tr>
+<td align="left">100</td>
+<td align="left">136.531192</td>
+<td align="left">39642120</td>
+<td align="left">27</td>
+</tr>
+</tbody>
+</table><p>So from first glance you get the following insights right away:</p>
+<ol>
+<li>28 values lie between 0 and ~29KG</li>
+<li>27 values lie between 136.53KG and 39,642,120KG</li>
+</ol>
+<p>Please tell me that you don’t think insight number 2 is normal - unless you’re a GIANT!</p>
+<p>Let’s dive a little bit deeper and start thinking critically about what these insights mean.</p>
+<h3 id="round_pushpin-critical-thinking">📍 Critical Thinking</h3>
+<p>Ok - firstly we need to consider what the data point is that we’re actually using here - in this case, it is a weight value in KG units.</p>
+<p>When we think of those small values in the 1st percentile under 29kg, a few things should come to mind:</p>
+<ol>
+<li>Maybe there were some incorrectly measured values - leading to some 0kg weight measurements</li>
+<li>Perhaps some of the low weights under 29kg were actually valid measurements from young children who were part of the customer base</li>
+</ol>
+<p>For the 100th percentile we could consider:</p>
+<ol>
+<li>Does that 136KG floor value make sense?</li>
+<li>How many error values were there actually in the dataset?</li>
+</ol>
+<p>Let’s first inspect that 1st and 100th percentile values carefully and inspect each value to see what happened!</p>
+<h3 id="triangular_flag_on_post-ranking-functions---row_number-rank-dense_rank">🚩 RANKING FUNCTIONS - ROW_NUMBER, RANK, DENSE_RANK</h3>
+<p>These are <strong>Window Functions</strong> for sorting values. The most important thing with ranking functions and what are the differences between them is to understand - <strong>HOW DO WE DEAL WITH TIES?</strong></p>
+<blockquote>
+<p>📝 <strong>All Window Functions are analytical functions but not all analytical functions are window functions</strong></p>
+</blockquote>
+<p>Let’s understand by a simple analogy :<br>
+Imagine we have 4 runners in a race - <strong>Danny, Rowan, Abe and Christian</strong>.</p>
+<p><img src="https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/Ranking%20Functions%20example.JPG?raw=true" alt="enter image description here"></p>
+<p><strong>RANK</strong> - There’s skipping of values whenever there is a tie.<br>
+<mark><code>RANK()</code></mark> ensures that duplicates have equal position, where the subsequent position after a set of duplicates is N + X (where X = number of duplicates).<br>
+<strong>DENSE_RANK</strong> - There is no skipping of values that come out of the ranking function, when it encounters a tie.<br>
+<mark><code>DENSE_RANK()</code></mark> also ensures that duplicates have equal position, but the subsequent position after a set of duplicates is N + 1.<br>
+<strong>ROW_NUMBER</strong> - Whenever there is a tie, it assigns an arbitrary number depending on where they are situated in the data even though they’re exactly the same value. So, it’s basically arbitrarily ranking ties.<br>
+<mark><code>ROW_NUMBER()</code></mark> orders each value depending on its position in the bucket, regardless of whether there are duplicates. Equation = N + 1.</p>
+<p>🌟 <strong>Example</strong> :</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">WITH</span> percentile_values <span class="token keyword">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword">SELECT</span>
+    measure_value<span class="token punctuation">,</span>
+    NTILE<span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span>
+      <span class="token keyword">ORDER</span> <span class="token keyword">BY</span>
+        measure_value
+    <span class="token punctuation">)</span> <span class="token keyword">AS</span> percentile
+  <span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+  <span class="token keyword">WHERE</span> measure <span class="token operator">=</span> <span class="token string">'weight'</span>
+<span class="token punctuation">)</span>
+<span class="token keyword">SELECT</span>
+  measure_value<span class="token punctuation">,</span>
+  <span class="token comment">-- these are examples of window functions below</span>
+  ROW_NUMBER<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token keyword">as</span> row_number_order<span class="token punctuation">,</span>
+  RANK<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token keyword">as</span> rank_order<span class="token punctuation">,</span>
+  DENSE_RANK<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token keyword">as</span> dense_rank_order
+<span class="token keyword">FROM</span> percentile_values
+<span class="token keyword">WHERE</span> percentile <span class="token operator">=</span> <span class="token number">100</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value <span class="token keyword">DESC</span><span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="left">measure_value</th>
+<th align="left">row_number_order</th>
+<th align="left">rank_order</th>
+<th align="left">dense_rank_order</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">39642120</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">39642120</td>
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">576484</td>
+<td align="left">3</td>
+<td align="left">3</td>
+<td align="left">2</td>
+</tr>
+<tr>
+<td align="left">200.487664</td>
+<td align="left">4</td>
+<td align="left">4</td>
+<td align="left">3</td>
+</tr>
+<tr>
+<td align="left">190.4</td>
+<td align="left">5</td>
+<td align="left">5</td>
+<td align="left">4</td>
+</tr>
+<tr>
+<td align="left">188.69427</td>
+<td align="left">6</td>
+<td align="left">6</td>
+<td align="left">5</td>
+</tr>
+<tr>
+<td align="left">186.8799</td>
+<td align="left">7</td>
+<td align="left">7</td>
+<td align="left">6</td>
+</tr>
+<tr>
+<td align="left">185.51913</td>
+<td align="left">8</td>
+<td align="left">8</td>
+<td align="left">7</td>
+</tr>
+<tr>
+<td align="left">175.086512</td>
+<td align="left">9</td>
+<td align="left">9</td>
+<td align="left">8</td>
+</tr>
+<tr>
+<td align="left">173.725736</td>
+<td align="left">10</td>
+<td align="left">10</td>
+<td align="left">9</td>
+</tr>
+<tr>
+<td align="left">170.5506</td>
+<td align="left">11</td>
+<td align="left">11</td>
+<td align="left">10</td>
+</tr>
+<tr>
+<td align="left">170.5506</td>
+<td align="left">12</td>
+<td align="left">11</td>
+<td align="left">10</td>
+</tr>
+<tr>
+<td align="left">170.5506</td>
+<td align="left">13</td>
+<td align="left">11</td>
+<td align="left">10</td>
+</tr>
+<tr>
+<td align="left">164</td>
+<td align="left">14</td>
+<td align="left">14</td>
+<td align="left">11</td>
+</tr>
+<tr>
+<td align="left">157.5778608</td>
+<td align="left">15</td>
+<td align="left">15</td>
+<td align="left">12</td>
+</tr>
+</tbody>
+</table><h3 id="round_pushpin-large-outliers">📍 Large Outliers</h3>
+<p>So it looks like there are at least 3 HUGE values which are outliers in our weight values in that top percentile.</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">measure_value</th>
+<th align="left">row_number_order</th>
+<th align="left">rank_order</th>
+<th align="left">dense_rank_order</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">39642120</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">39642120</td>
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">576484</td>
+<td align="left">3</td>
+<td align="left">3</td>
+<td align="left">2</td>
+</tr>
+<tr>
+<td align="left">200.487664</td>
+<td align="left">4</td>
+<td align="left">4</td>
+<td align="left">3</td>
+</tr>
+</tbody>
+</table><p>The last 200kg value MIGHT be a real measurement - so we would have to apply our judgement to determine whether this is actually an outlier or not.<br>
+The next question is: what do we do with them? - simple: you remove them!</p>
+<h3 id="round_pushpin-small-outliers">📍 Small Outliers</h3>
+<p>Let’s again show all of those ordering window functions so you can take a look again - this time we will sort from smallest to largest so we will remove all of the <code>DESC</code> parts in our ranking query to end up with the following:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">measure_value</th>
+<th align="left">row_number_order</th>
+<th align="left">rank_order</th>
+<th align="left">dense_rank_order</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">0</td>
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">1.814368</td>
+<td align="left">3</td>
+<td align="left">3</td>
+<td align="left">2</td>
+</tr>
+<tr>
+<td align="left">2.26796</td>
+<td align="left">4</td>
+<td align="left">4</td>
+<td align="left">3</td>
+</tr>
+<tr>
+<td align="left">2.26796</td>
+<td align="left">5</td>
+<td align="left">4</td>
+<td align="left">3</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">6</td>
+<td align="left">6</td>
+<td align="left">4</td>
+</tr>
+</tbody>
+</table><p>It seems like there are a few 0 weight values as well as a few very small values.<br>
+Let’s just remove the 0 values and keep everything else!</p>
+<h3 id="round_pushpin-removing-outliers">📍 Removing Outliers</h3>
+<p>To do this - we can simply use a  <code>WHERE</code>  filter with some SQL conditions.<br>
+Let’s create a temporary  <code>clean_weight_logs</code>  table with our outliers removed by applying strict inequality conditions.</p>
+<ol>
+<li>Create a temporary table using a  <code>CREATE TEMP TABLE &lt;&gt; AS</code>  statement</li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> clean_weight_logs<span class="token punctuation">;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TEMP</span> <span class="token keyword">TABLE</span> clean_weight_logs <span class="token keyword">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword">SELECT</span> <span class="token operator">*</span>
+  <span class="token keyword">FROM</span> health<span class="token punctuation">.</span>user_logs
+  <span class="token keyword">WHERE</span> measure <span class="token operator">=</span> <span class="token string">'weight'</span>
+    <span class="token operator">AND</span> measure_value <span class="token operator">&gt;</span> <span class="token number">0</span>
+    <span class="token operator">AND</span> measure_value <span class="token operator">&lt;</span> <span class="token number">201</span>
+    <span class="token comment">-- (we can also use BETWEEN 1 AND 201)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ol start="2">
+<li>Calculate summary statistics on this new temp table</li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">MIN</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> minimum_value<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">MAX</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> maximum_value<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token function">AVG</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> mean_value<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span>
+    <span class="token comment">-- this function actually returns a float which is incompatible with ROUND!</span>
+    <span class="token comment">-- we use this cast function to convert the output type to NUMERIC</span>
+    CAST<span class="token punctuation">(</span>PERCENTILE_CONT<span class="token punctuation">(</span><span class="token number">0.5</span><span class="token punctuation">)</span> <span class="token keyword">WITHIN</span> <span class="token keyword">GROUP</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> <span class="token keyword">NUMERIC</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token number">2</span>
+  <span class="token punctuation">)</span> <span class="token keyword">AS</span> median_value<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span>
+    MODE<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">WITHIN</span> <span class="token keyword">GROUP</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token number">2</span>
+  <span class="token punctuation">)</span> <span class="token keyword">AS</span> mode_value<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span>STDDEV<span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> standard_deviation<span class="token punctuation">,</span>
+  <span class="token function">ROUND</span><span class="token punctuation">(</span>VARIANCE<span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> variance_value
+<span class="token keyword">FROM</span> clean_weight_logs<span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="left">minimum_value</th>
+<th align="left">maximum_value</th>
+<th align="left">mean_value</th>
+<th align="left">median_value</th>
+<th align="left">mode_value</th>
+<th align="left">standard_deviation</th>
+<th align="left">variance_value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">1.81</td>
+<td align="left">200.49</td>
+<td align="left">80.76</td>
+<td align="left">75.98</td>
+<td align="left">68.49</td>
+<td align="left">26.91</td>
+<td align="left">724.29</td>
+</tr>
+</tbody>
+</table><p>How does this compare to our original summary statistics on the weight values prior to our treatment of the outliers?</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">minimum_value</th>
+<th align="center">maximum_value</th>
+<th align="center">mean_value</th>
+<th align="center">median_value</th>
+<th align="center">mode_value</th>
+<th align="center">standard_deviation</th>
+<th align="center">variance_value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0</td>
+<td align="center">39642120</td>
+<td align="center">28786.85</td>
+<td align="center">75.98</td>
+<td align="center">68.49</td>
+<td align="center">1062759.55</td>
+<td align="center">1.12946E+12</td>
+</tr>
+</tbody>
+</table><ol start="3">
+<li>Show the new cumulative distribution function with treated data</li>
+</ol>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">WITH</span> percentile_values <span class="token keyword">AS</span> <span class="token punctuation">(</span>
+  <span class="token keyword">SELECT</span>
+    measure_value<span class="token punctuation">,</span>
+    NTILE<span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> percentile
+  <span class="token keyword">FROM</span> clean_weight_logs
+<span class="token punctuation">)</span>
+<span class="token keyword">SELECT</span>
+  percentile<span class="token punctuation">,</span>
+  <span class="token function">MIN</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> floor_value<span class="token punctuation">,</span>
+  <span class="token function">MAX</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> ceiling_value<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> percentile_counts
+<span class="token keyword">FROM</span> percentile_values
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> percentile
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> percentile<span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="left">percentile</th>
+<th align="left">floor_value</th>
+<th align="left">ceiling_value</th>
+<th align="left">percentile_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">1</td>
+<td align="left">1.814368</td>
+<td align="left">29.48348</td>
+<td align="left">28</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">29.48348</td>
+<td align="left">32.4771872</td>
+<td align="left">28</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">32.658623</td>
+<td align="left">35.380177</td>
+<td align="left">28</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">35.380177</td>
+<td align="left">36.74095</td>
+<td align="left">28</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">36.74095</td>
+<td align="left">37.194546</td>
+<td align="left">28</td>
+</tr>
+<tr>
+<td align="left">…</td>
+<td align="left">…</td>
+<td align="left">…</td>
+<td align="left">…</td>
+</tr>
+<tr>
+<td align="left">95</td>
+<td align="left">129.77278</td>
+<td align="left">130.52802</td>
+<td align="left">27</td>
+</tr>
+<tr>
+<td align="left">96</td>
+<td align="left">130.5389</td>
+<td align="left">131.54168</td>
+<td align="left">27</td>
+</tr>
+<tr>
+<td align="left">97</td>
+<td align="left">131.54169</td>
+<td align="left">132.6599</td>
+<td align="left">27</td>
+</tr>
+<tr>
+<td align="left">98</td>
+<td align="left">132.736</td>
+<td align="left">133.765</td>
+<td align="left">27</td>
+</tr>
+<tr>
+<td align="left">99</td>
+<td align="left">133.80965</td>
+<td align="left">136.0776</td>
+<td align="left">27</td>
+</tr>
+<tr>
+<td align="left">100</td>
+<td align="left">136.0776</td>
+<td align="left">200.487664</td>
+<td align="left">27</td>
+</tr>
+</tbody>
+</table><h3 id="triangular_flag_on_post-data-visualization">🚩 Data Visualization</h3>
+<p>Click on the top right little chart icon next to the blue <code>Run</code> button - Configure visualization - select Line option - hover over different parts of the chart - you will see a tooltip popup with additional information about that data point.<br>
+<img src="https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/SQLPad%20viz.png?raw=true" alt="SQLPad Viz"></p>
+<p><img src="https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/Median%20Viz.png?raw=true" alt="Median Viz"></p>
+<p><img src="https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/80th%20Percentile%20Viz.png?raw=true" alt="80th Percentile Viz"></p>
+<p><img src="https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/Range%20Distribution%20Values%20and%20Percentiles.png?raw=true" alt="Range Distribution Values and Percentiles"></p>
+<h3 id="triangular_flag_on_post-histograms">🚩 Histograms</h3>
+<p><img src="https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/Normal%20Distribution.png?raw=true" alt="Normal Distribution"><br>
+A histogram is essentially trying to mimic this bell curve but instead of having a smooth line only - we will have vertical bars that represent some range of the X-axis and the Y-value or the height of the bar will represent how many records exist in that range.</p>
+<p>In PostgreSQL we have a  <code>WIDTH_BUCKET</code>  function that helps us split the range of values into a number of buckets we would like. Let’s again use our  <code>clean_weight_logs</code>  temporary dataset to perform these transformations.</p>
+<p>One important thing to note is that we actually require the minimum and maximum values from the weight values to use as the ranges for this function.</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span>
+  <span class="token function">MIN</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> minimum_value<span class="token punctuation">,</span>
+  <span class="token function">MAX</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> maximum_value
+<span class="token keyword">FROM</span> clean_weight_logs<span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="left">minimum_value</th>
+<th align="left">maximum_value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">1.814368</td>
+<td align="left">200.487664</td>
+</tr>
+</tbody>
+</table><p>For our dataset - let’s take 0 as the minimum and 200 as the maximum and use 50 buckets for our visualization, we will also need the <code>AVG</code> from each bucket to use as our X-value location for the histogram:</p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token keyword">SELECT</span>
+  WIDTH_BUCKET<span class="token punctuation">(</span>measure_value<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> bucket<span class="token punctuation">,</span>
+  <span class="token function">AVG</span><span class="token punctuation">(</span>measure_value<span class="token punctuation">)</span> <span class="token keyword">AS</span> measure_value<span class="token punctuation">,</span>
+  <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> frequency
+<span class="token keyword">FROM</span> clean_weight_logs
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> bucket
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> bucket<span class="token punctuation">;</span>
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="left">bucket</th>
+<th align="left">measure_value</th>
+<th align="left">frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">1</td>
+<td align="left">2.116762667</td>
+<td align="left">3</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">9.924138667</td>
+<td align="left">3</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">14.061352</td>
+<td align="left">2</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">18.14368</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">22.226008</td>
+<td align="left">2</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">26.64853</td>
+<td align="left">8</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">30.55509116</td>
+<td align="left">32</td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="left">34.41613442</td>
+<td align="left">43</td>
+</tr>
+<tr>
+<td align="left">10</td>
+<td align="left">37.95278404</td>
+<td align="left">120</td>
+</tr>
+<tr>
+<td align="left">11</td>
+<td align="left">41.54462592</td>
+<td align="left">66</td>
+</tr>
+<tr>
+<td align="left">12</td>
+<td align="left">45.63419633</td>
+<td align="left">18</td>
+</tr>
+<tr>
+<td align="left">13</td>
+<td align="left">49.374735</td>
+<td align="left">8</td>
+</tr>
+<tr>
+<td align="left">14</td>
+<td align="left">53.62668816</td>
+<td align="left">22</td>
+</tr>
+<tr>
+<td align="left">15</td>
+<td align="left">57.43087518</td>
+<td align="left">52</td>
+</tr>
+<tr>
+<td align="left">16</td>
+<td align="left">62.7802731</td>
+<td align="left">197</td>
+</tr>
+<tr>
+<td align="left">17</td>
+<td align="left">65.85507871</td>
+<td align="left">410</td>
+</tr>
+<tr>
+<td align="left">18</td>
+<td align="left">69.01802695</td>
+<td align="left">220</td>
+</tr>
+<tr>
+<td align="left">19</td>
+<td align="left">74.55357018</td>
+<td align="left">184</td>
+</tr>
+<tr>
+<td align="left">20</td>
+<td align="left">78.34794395</td>
+<td align="left">307</td>
+</tr>
+<tr>
+<td align="left">21</td>
+<td align="left">81.03449969</td>
+<td align="left">66</td>
+</tr>
+<tr>
+<td align="left">22</td>
+<td align="left">86.43871084</td>
+<td align="left">79</td>
+</tr>
+<tr>
+<td align="left">23</td>
+<td align="left">89.95040369</td>
+<td align="left">129</td>
+</tr>
+<tr>
+<td align="left">24</td>
+<td align="left">93.84927092</td>
+<td align="left">71</td>
+</tr>
+<tr>
+<td align="left">25</td>
+<td align="left">97.50817396</td>
+<td align="left">131</td>
+</tr>
+<tr>
+<td align="left">26</td>
+<td align="left">101.9506805</td>
+<td align="left">64</td>
+</tr>
+<tr>
+<td align="left">27</td>
+<td align="left">106.1814394</td>
+<td align="left">40</td>
+</tr>
+<tr>
+<td align="left">28</td>
+<td align="left">109.318591</td>
+<td align="left">36</td>
+</tr>
+<tr>
+<td align="left">29</td>
+<td align="left">113.9617229</td>
+<td align="left">42</td>
+</tr>
+<tr>
+<td align="left">30</td>
+<td align="left">118.4711933</td>
+<td align="left">63</td>
+</tr>
+<tr>
+<td align="left">31</td>
+<td align="left">122.2072225</td>
+<td align="left">133</td>
+</tr>
+<tr>
+<td align="left">32</td>
+<td align="left">125.5701738</td>
+<td align="left">40</td>
+</tr>
+<tr>
+<td align="left">33</td>
+<td align="left">130.3593597</td>
+<td align="left">90</td>
+</tr>
+<tr>
+<td align="left">34</td>
+<td align="left">133.41501</td>
+<td align="left">65</td>
+</tr>
+<tr>
+<td align="left">35</td>
+<td align="left">136.7067054</td>
+<td align="left">14</td>
+</tr>
+<tr>
+<td align="left">36</td>
+<td align="left">141.1578304</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">37</td>
+<td align="left">144.695848</td>
+<td align="left">2</td>
+</tr>
+<tr>
+<td align="left">38</td>
+<td align="left">149.68536</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">40</td>
+<td align="left">157.5778608</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">42</td>
+<td align="left">164</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">43</td>
+<td align="left">170.5506</td>
+<td align="left">3</td>
+</tr>
+<tr>
+<td align="left">44</td>
+<td align="left">174.406124</td>
+<td align="left">2</td>
+</tr>
+<tr>
+<td align="left">47</td>
+<td align="left">186.199515</td>
+<td align="left">2</td>
+</tr>
+<tr>
+<td align="left">48</td>
+<td align="left">189.547135</td>
+<td align="left">2</td>
+</tr>
+<tr>
+<td align="left">51</td>
+<td align="left">200.487664</td>
+<td align="left">1</td>
+</tr>
+</tbody>
+</table><p>Generate this visualization using SQLPad<br>
+<img src="https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/Histogram.png?raw=true" alt="Histogram"><br>
+Although this chart is not quite a perfect bell curve - it’s representing how our data would look like!<br>
+However, CDF’s are preferred over Histogram’s because the shape of the Histogram purely depends on the number of bins and the histogram is very sensitive to outliers.</p>
+</div>
+</body>
+
+</html>
