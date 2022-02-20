@@ -1149,7 +1149,7 @@ FROM clean_weight_logs;
 How does this compare to our original summary statistics on the weight values prior to our treatment of the outliers?
 
 |minimum_value|maximum_value|mean_value|median_value|mode_value|standard_deviation|variance_value|
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|:----|:----|:----|:----|:----|:----|:----|
 |0|39642120|28786.85|75.98|68.49|1062759.55|1.12946E+12|
 
 3.  Show the new cumulative distribution function with treated data
