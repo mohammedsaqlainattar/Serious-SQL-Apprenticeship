@@ -1030,13 +1030,13 @@ Imagine we have 4 runners in a race - **Danny, Rowan, Abe and Christian**.
 ![enter image description here](https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/Ranking%20Functions%20example.JPG?raw=true)
 
 **RANK** - There's skipping of values whenever there is a tie.
-==`RANK()`== ensures that duplicates have equal position, where the subsequent position after a set of duplicates is N + X (where X = number of duplicates).
+`RANK()` ensures that duplicates have equal position, where the subsequent position after a set of duplicates is N + X (where X = number of duplicates).
 
 **DENSE_RANK** - There is no skipping of values that come out of the ranking function, when it encounters a tie.
-==`DENSE_RANK()`== also ensures that duplicates have equal position, but the subsequent position after a set of duplicates is N + 1.
+`DENSE_RANK()` also ensures that duplicates have equal position, but the subsequent position after a set of duplicates is N + 1.
 
 **ROW_NUMBER** - Whenever there is a tie, it assigns an arbitrary number depending on where they are situated in the data even though they're exactly the same value. So, it's basically arbitrarily ranking ties.
-==`ROW_NUMBER()`== orders each value depending on its position in the bucket, regardless of whether there are duplicates. Equation = N + 1.
+`ROW_NUMBER()` orders each value depending on its position in the bucket, regardless of whether there are duplicates. Equation = N + 1.
 
 :star2: **Example** :
 ```sql
