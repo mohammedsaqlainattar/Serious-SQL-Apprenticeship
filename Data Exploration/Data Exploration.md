@@ -16,14 +16,14 @@ language_id,name
 FROM dvd_rentals.language;
 ```
 
-**Use ==`LIMIT`== to restrict the output to just the first few rows from the query.**
+**Use `LIMIT` to restrict the output to just the first few rows from the query.**
 ```sql
 SELECT *
 FROM dvd_rentals.actor
 LIMIT 10;
 ```
 
->:bulb: **We can use the ==`ORDER BY`== clause at the end of our queries to sort the output using ==`ASC`== or ==`DESC`==**
+>:bulb: **We can use the `ORDER BY` clause at the end of our queries to sort the output using `ASC` or `DESC`**
 
 **What are the first 5 values in the `country` column from the `country` table by alphabetical order?**
 ```sql
@@ -33,7 +33,7 @@ ORDER BY country ASC
 LIMIT 5;
 ```
 
-**Sort By Multiple Columns** - We can also perform a multi-level sort by specifying 2 or more columns with the ==`ORDER BY`== clause.
+**Sort By Multiple Columns** - We can also perform a multi-level sort by specifying 2 or more columns with the `ORDER BY` clause.
 
 ```sql
 SELECT * FROM sample_table
@@ -85,14 +85,14 @@ LIMIT 1 OFFSET 4; -- To return 5th row, offset the 1st 4 rows and only show the 
 
 ## :pushpin: Record Counts & Distinct Values
 
-**We use the ==`COUNT`== function to take a look at a simple record count in a table.
+**We use the `COUNT` function to take a look at a simple record count in a table.
 For example, how many rows are there in the `film_list` table?**
 ```sql
 SELECT COUNT(*) AS row_count
 FROM dvd_rentals.film_list;
 ```
 
-**The ==`DISTINCT`== keyword is used to identify the unique values from a column.**
+**The `DISTINCT` keyword is used to identify the unique values from a column.**
 - **What are the unique values for the `rating` column in the `film` table?**
 ```sql
 SELECT DISTINCT(rating)
@@ -106,7 +106,7 @@ SELECT
 FROM dvd_rentals.film_list;
 ```
 
-**==`GOUP BY`== clause with an aggregate function like ==`COUNT`== allows us to "Group" the data based of the values of the selected columns.**
+**`GOUP BY` clause with an aggregate function like `COUNT` allows us to "Group" the data based of the values of the selected columns.**
 
 - **What is the frequency of values in the `rating` column in the `film_list` table?**
 ```sql
@@ -114,9 +114,9 @@ SELECT rating,COUNT(*) AS frequency
 FROM dvd_rentals.film_list
 GROUP BY rating;
 ```
->**:bulb: The important thing to note for ==`GROUP BY`== aggregate functions is this: Only 1 row is returned for each group. Grouping on multiple columns returns a row for every unique combination of values present in the columns.**
+>**:bulb: The important thing to note for `GROUP BY` aggregate functions is this: Only 1 row is returned for each group. Grouping on multiple columns returns a row for every unique combination of values present in the columns.**
 
-**Using ==`GROUP BY`== on 2+ columns.**
+**Using `GROUP BY` on 2+ columns.**
 - **What are the 5 most frequent `rating` and `category` combinations in the `film_list` table?**
 ```sql
 SELECT
@@ -158,8 +158,8 @@ LIMIT 1;
 
 2.  **How many distinct  `fid`  values are there for the 3rd most common  `price`  value in the  `dvd_rentals.nicer_but_slower_film_list`  table?**
 - We have **2** things to notice here
-	1. 'How many distinct' hints that we have to use ==`COUNT`== and ==`DISTINCT`==.
-	2. '3rd most common `price` value' indicates that we have to use ==`GROUP BY`== on `price` column.
+	1. 'How many distinct' hints that we have to use `COUNT` and `DISTINCT`.
+	2. '3rd most common `price` value' indicates that we have to use `GROUP BY` on `price` column.
 
 ```sql
 SELECT price,COUNT(DISTINCT fid) as fid_count
@@ -240,7 +240,7 @@ GROUP BY category;
 |Travel|5.62|
 
 
->**:sparkles: Tip: Take a note of that ==`CAST`== or ==`::NUMERIC`== in the previous two examples. This is to **avoid** dreaded integer floor division.
+>**:sparkles: Tip: Take a note of that `CAST` or `::NUMERIC` in the previous two examples. This is to "avoid" dreaded integer floor division.
 For example : consider a simple case of division like** 
 ```sql
 SELECT 100/3 AS integer_division;
@@ -249,8 +249,8 @@ SELECT 15/20 AS integer_division;
 ```
 > We expect the answer to be **33.333** for 100/3 but we actually get **33** and **0.75** for 15/20 but we get **0**.
 > 
->:point_right: **Explanation: When you divide an ==`INT`== data type with another ==`INT`== data type - the SQL engine automatically returns you the floor division!
->:heavy_check_mark: The solution is to simply cast either the top or the bottom of the division terms as a ==`NUMERIC`== data type and you’re set!**
+>:point_right: **Explanation: When you divide an `INT` data type with another `INT` data type - the SQL engine automatically returns you the floor division!
+>:heavy_check_mark: The solution is to simply cast either the top or the bottom of the division terms as a `NUMERIC` data type and you’re set!**
 
 ***
 ## :pushpin: Identifying Duplicate Records and How to deal with them :thinking:
@@ -259,31 +259,31 @@ SELECT 15/20 AS integer_division;
 
 ### :triangular_flag_on_post: Detecting Duplicate Records
 Before we think about removing duplicate records - we need a systematic way to check whether our table has any duplicate records first!
-The first ingredient for this recipe is the basic record count for our table - plain and simple using the ==`COUNT(*)`== function.
+The first ingredient for this recipe is the basic record count for our table - plain and simple using the `COUNT(*)` function.
 ```sql
 SELECT COUNT(*)
 FROM health.user_logs;
 ```
 ### :triangular_flag_on_post: Remove All Duplicates
 
-We could use the ==`DISTINCT`== keyword to remove duplicates from the table 
+We could use the `DISTINCT` keyword to remove duplicates from the table 
 ```sql
 SELECT DISTINCT *
 FROM health.user_logs;
 ```
-**BUT**, if we want to count the number of rows in this deduplicated dataset using the ==`COUNT`== function then we will run into an error :x: :point_right: **" syntax error at or near * "** for the code below
+**BUT**, if we want to count the number of rows in this deduplicated dataset using the `COUNT` function then we will run into an error :x: :point_right: **" syntax error at or near * "** for the code below
 ```sql
 SELECT COUNT(DISTINCT *) -- this won't work
 FROM health.user_logs;
 ```
-Unfortunately for us - **PostgreSQL** does not allow for this style of  ==`COUNT(DISTINCT *)`==  syntax like we can use on a single column! :heavy_exclamation_mark:
+Unfortunately for us - **PostgreSQL** does not allow for this style of  `COUNT(DISTINCT *)`  syntax like we can use on a single column! :heavy_exclamation_mark:
 There are some other flavours of SQL that actually allow for this syntax namely Teradata, however it is not a standard operation which we can use everywhere.
 
 However, it is relatively straightforward to get around this and there are a few ways!
 
 1. **Subquery**
-	A subquery is essentially a query within a query - in this case we want to use our  ==`DISTINCT *`==  output in the innermost nested query as a data source for the outer query.
-Take note of the syntax - especially the  ==`AS`==  component because subqueries must always have an alias!
+	A subquery is essentially a query within a query - in this case we want to use our  `DISTINCT *`  output in the innermost nested query as a data source for the outer query.
+Take note of the syntax - especially the  `AS`  component because subqueries must always have an alias!
 ```sql
 SELECT COUNT(*)
 FROM (
@@ -306,17 +306,17 @@ FROM deduped_logs;
 ```
 
 3. **Temporary Tables**
-	We can also create a temporary table with only the unique values of our dataset after we run the  ==`DISTINCT`==  query.
+	We can also create a temporary table with only the unique values of our dataset after we run the  `DISTINCT`  query.
 	This is a very common approach when you know that you will only be analyzing the deduplicated dataset, and you will ignore the original one with duplicates.
 
-	The main benefit of using temporary tables is removing the need to always run the same  ==`DISTINCT`==  command everytime you want to run a query on the deduplicated records. Temporary tables can also be used with indexes and partitions to speed up performance of our SQL queries.
+	The main benefit of using temporary tables is removing the need to always run the same  `DISTINCT`  command everytime you want to run a query on the deduplicated records. Temporary tables can also be used with indexes and partitions to speed up performance of our SQL queries.
 
 	There is a lengthier process to dealing with temporary tables for our example
-- First we run a  ==`DROP TABLE IF EXISTS`==  statement to clear out any previously created tables
+- First we run a  `DROP TABLE IF EXISTS`  statement to clear out any previously created tables
 ```sql
 DROP TABLE IF EXISTS deduplicated_user_logs;
 ```
-:warning: Be very careful when running this following ==`DROP 	TABLE`== statement as you can’t really undo things when you drop an actual table!
+:warning: Be very careful when running this following `DROP TABLE` statement as you can’t really undo things when you drop an actual table!
 
 - Next create a new temporary table using the results of the query below
 ```sql
@@ -332,7 +332,7 @@ FROM deduplicated_user_logs
 LIMIT 10;
 ```
 
--   Finally, let’s run that same  ==`COUNT`==  on this deduplicated temp table to confirm it did the right thing!
+-   Finally, let’s run that same  `COUNT`  on this deduplicated temp table to confirm it did the right thing!
 ```sql
 SELECT COUNT(*)
 FROM deduplicated_user_logs;
@@ -362,10 +362,10 @@ Finally our aim is to write a final SQL statement to efficiently return us all r
 :white_check_mark: **Group By Counts On All Columns**
 There are different ways to approach this simple problem of returning duplicate rows depending on what is required.
 We can implement a single SQL statement that will help us achieve both outputs and also something even more useful!
-The trick is to use a  ==`GROUP BY`==  clause which has every single column in the grouping element and a  ==`COUNT`==  aggregate function - this is an elegant solution to quickly find the unique combinations of all the rows.
+The trick is to use a  `GROUP BY`  clause which has every single column in the grouping element and a  `COUNT`  aggregate function - this is an elegant solution to quickly find the unique combinations of all the rows.
 
-Hang on a second…isn’t that exactly what the  ==`DISTINCT`== keyword is supposed to do?
-Yes - that’s correct! The only difference here is that we can also apply the aggregate function with the  ==`GROUP BY`==  clause to find the counts for the unique combinations.
+Hang on a second…isn’t that exactly what the  `DISTINCT` keyword is supposed to do?
+Yes - that’s correct! The only difference here is that we can also apply the aggregate function with the  `GROUP BY`  clause to find the counts for the unique combinations.
 ```sql
 SELECT
   id,
@@ -389,8 +389,8 @@ Notice how the frequency for some of these values is 1 (which means they are uni
 This is exactly how we know which unique combinations of the columns have duplicates!
 
 :white_check_mark: **Having Clause For Unique Duplicates**
-Now the final step is to use the ==`HAVING`== clause to further trim down our output by applying a condition on the same ==`COUNT(*)`== expression we were using for the 'frequency' column.
-Since we only want the duplicate records to be returned - we would like that ==`COUNT(*)`== value to be greater than 1.
+Now the final step is to use the `HAVING` clause to further trim down our output by applying a condition on the same `COUNT(*)` expression we were using for the 'frequency' column.
+Since we only want the duplicate records to be returned - we would like that `COUNT(*)` value to be greater than 1.
 ```sql
 SELECT
   id,
@@ -653,7 +653,7 @@ WHERE measure_value = 0;
 
 6.  **What percentage of records are duplicates in the  `health.user_logs`  table?**
 - This is seemingly simple question is actually deceivingly tricky - mainly because of how one would set the numerator for this calculation!
-- We will use a ==`SUM`== and a ==`CASE WHEN`== statement to make this happen in a single query.
+- We will use a `SUM` and a `CASE WHEN` statement to make this happen in a single query.
 ```sql
 WITH cte_duplicate_records AS (
   SELECT
@@ -703,14 +703,14 @@ SELECT
 ### :triangular_flag_on_post: Measures of Central Tendency :point_right: Mean, Median and Mode
 
 - **Mean** - Also known as Average, it is the sum of all values divided by the total count of values for a set of numbers.
-						$$\mu = \frac{\sum_{i=1}^N X_i}{N}$$
+![Mean formula](https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/Mean%20formula.JPG?raw=true)
 
 - **Median** - The median (also known as the 50th percentile value) is the value separating the top half from the bottom half of a data sample, a population, or a probability distribution. It is simply the **middle value** in an ordered (ascending or descending) list of numbers.
 
 - **Mode** - The mode is simply calculated as the value that appears the most number of times i.e the most frequent value in the dataset. Also, a given set of observations can have more than one mode.
 ![enter image description here](https://cdn.educba.com/academy/wp-content/uploads/2020/02/Statistics-Formula.jpg.webp)
 
-Some flavours of SQL actually have implemented median and mode values as regular functions like the ==`AVG`== function. But, in PostgreSQL it's a little tricky!
+Some flavours of SQL actually have implemented median and mode values as regular functions like the `AVG` function. But, in PostgreSQL it's a little tricky!
 ```sql
 SELECT
   AVG(example_values) AS mean_value,
@@ -741,8 +741,7 @@ WHERE measure = 'weight';
 **Variance** and **Standard Deviation** are used to describe the “spread” of the data about the mean value. Also, the variance is simply the square of the standard deviation.
 
 **Variance and Std.Dev Formulae:**			
-			$$\sigma^2 = \frac{\sum_{i=1}^N (x_i -\mu)^2}{N-1}$$
-			$$\sigma = \sqrt\frac{\sum_{i=1}^N (x_i -\mu)^2}{N-1}$$
+![Variance and Std.Dev](https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/Variance%20and%20Std.Dev.JPG?raw=true)
 
 ```sql
  WITH sample_data (example_values) AS (
@@ -871,9 +870,7 @@ WHERE measure = 'blood_glucose';
 
 3.  **Calculate the 2 Pearson Coefficient of Skewness for blood glucose measures given the following formulas:**
 
-$$Coefficient 1: Mode Skewness = \frac{Mean - Mode}{StandardDeviation}$$
-
-$$Coefficient 2: Median Skewness = 3*\frac{Mean - Median}{StandardDeviation}$$
+![Pearson Coefficient of Skewness](https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/Pearson%20Coefficient%20of%20Skewness.JPG?raw=true)
 
 ```sql
 WITH cte_blood_glucose AS (
@@ -906,7 +903,7 @@ FROM cte_blood_glucose;
 
 In mathematical terms, a cumulative distribution function takes a value and returns us the percentile or in other words: the probability of any value between the minimum value of our dataset  `X`  and the value  `V`  as shown below:
 
-$$F(V)=\int_{min(X)}^V f(x)dx=Pr[min(X)≤x≤V]$$
+![CDF](https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/CDF.JPG?raw=true)
 
 The beautiful thing about probabilities is that they always add up to 1!
 >**:bulb: Refer to course notes for working algorithm and thinking**
@@ -1191,6 +1188,7 @@ ORDER BY percentile;
 ### :triangular_flag_on_post: Data Visualization
 
 Click on the top right little chart icon next to the blue `Run` button - Configure visualization - select Line option - hover over different parts of the chart - you will see a tooltip popup with additional information about that data point.
+
 ![SQLPad Viz](https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/SQLPad%20viz.png?raw=true)
 
 ![Median Viz](https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/Median%20Viz.png?raw=true)
