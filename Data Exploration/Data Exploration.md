@@ -703,7 +703,7 @@ SELECT
 ### :triangular_flag_on_post: Measures of Central Tendency :point_right: Mean, Median and Mode
 
 - **Mean** - Also known as Average, it is the sum of all values divided by the total count of values for a set of numbers.
-![Mean formula](https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/Mean%20formula.JPG?raw=true)
+			![Mean formula](https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/Mean%20formula.JPG?raw=true)
 
 - **Median** - The median (also known as the 50th percentile value) is the value separating the top half from the bottom half of a data sample, a population, or a probability distribution. It is simply the **middle value** in an ordered (ascending or descending) list of numbers.
 
