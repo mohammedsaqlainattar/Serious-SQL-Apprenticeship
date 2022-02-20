@@ -740,8 +740,9 @@ WHERE measure = 'weight';
 
 **Variance** and **Standard Deviation** are used to describe the “spread” of the data about the mean value. Also, the variance is simply the square of the standard deviation.
 
-**Variance and Std.Dev Formulae:**			
-![Variance and Std.Dev](https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/Variance%20and%20Std.Dev.JPG?raw=true)
+**Variance and Std.Dev Formulae:**
+
+		![Variance and Std.Dev](https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/Variance%20and%20Std.Dev.JPG?raw=true)
 
 ```sql
  WITH sample_data (example_values) AS (
