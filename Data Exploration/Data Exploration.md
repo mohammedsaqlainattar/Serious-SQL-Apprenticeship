@@ -1280,4 +1280,5 @@ Generate this visualization using SQLPad
 ![Histogram](https://github.com/mohammedsaqlainattar/Serious-SQL-Apprenticeship/blob/main/Images/Histogram.png?raw=true)
 
 Although this chart is not quite a perfect bell curve - it’s representing how our data would look like!
+
 However, CDF's are preferred over Histogram's because the shape of the Histogram purely depends on the number of bins and the histogram is very sensitive to outliers.
