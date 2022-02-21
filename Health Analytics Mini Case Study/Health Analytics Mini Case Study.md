@@ -159,7 +159,7 @@ FROM measure_atleast_two_cte;
 |:---:|:---:|
 |204|36.82|
 
-Out of 554 unique users, 204 users i.e almost 37% have atleast two types of measurements.
+Out of 554 users, 204 unique users i.e almost 37% have atleast two types of measurements.
 ***
 
 8. **Looking at the logs data - what is the number and percentage of the active user base who : Have all 3 measures - blood glucose, weight and blood pressure?**
@@ -203,7 +203,7 @@ FROM all_measures_cte;
 |:---:|:---:|
 |50|9.03|
 
-Out of 554 unique users, 50 users i.e approx 9% have all 3 measurements.
+Out of 554 users, 50 unique users i.e approx 9% have all 3 measurements.
 ***
 
 9. **For users that have blood pressure measurements: What is the median systolic/diastolic blood pressure values?**
