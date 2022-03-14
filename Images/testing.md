@@ -2,7 +2,7 @@
 
 <details>
 <summary>
-**Click here to view learning outcomes from this case study!**
+Click here to view learning outcomes from this case study!
 </summary>
 
 The following SQL skills and concepts will be covered in this Case Study :
