@@ -2180,4 +2180,4 @@ LIMIT 5;
 
 ***
 
-:heavy_check_mark: **The marketing team may use this final lookup table in their customer e-mail campaign to promote higher sales and engagement by sharing insights about each customer's viewing behaviour and delivering personalized recommendations!**
+###:heavy_check_mark: **The marketing team may use this final lookup table in their customer e-mail campaign to promote higher sales and engagement by sharing insights about each customer's viewing behaviour and delivering personalized recommendations!**
