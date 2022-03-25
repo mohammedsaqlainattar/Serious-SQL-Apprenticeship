@@ -1,4 +1,4 @@
-﻿# :clapper: Marketing Analytics Case Study :dvd:
+﻿# :clapper: Marketing Analytics Case Study Notes :dvd:
 
 ## :clipboard: Learning Outcomes :heavy_check_mark:
 
